@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegionalContacts.api", "reg
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Service", "3 - Service", "{A503A7FB-C416-41C9-8956-0FF450AC3BA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegionalContacts.Service", "RegionalContacts.Service\RegionalContacts.Service.csproj", "{B05047D9-E871-4034-9E57-647046339E33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegionalContacts.Service", "Service\RegionalContacts.Service.csproj", "{B05047D9-E871-4034-9E57-647046339E33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
