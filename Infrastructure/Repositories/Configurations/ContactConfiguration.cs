@@ -15,10 +15,10 @@ public class ContactConfiguration : IEntityTypeConfiguration<Contact>
         builder.Property(p => p.Name).HasColumnName("Nome").HasColumnType("VARCHAR(250)").IsRequired();
         builder.Property(p => p.Email).HasColumnName("Email").HasColumnType("VARCHAR(250)").IsRequired();
         builder.Property(p => p.PhoneNumber).HasColumnName("NumeroTelefone").HasColumnType("VARCHAR(9)").IsRequired();
-        builder.Property(p => p.RegionId).HasColumnName("IdRegiao").IsRequired();
 
         builder.HasOne(o => o.PhoneRegion)
             .WithMany(m => m.Contacts)
-            .HasPrincipalKey(p => p.Id);
+            .HasPrincipalKey(p => p.Id)
+            .HasConstraintName("IdArea");
     }
 }

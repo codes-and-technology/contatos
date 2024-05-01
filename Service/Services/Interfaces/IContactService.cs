@@ -1,8 +1,11 @@
 ﻿using RegionalContacts.Core.Dto;
+using RegionalContacts.Core.Entity;
 
 namespace RegionalContacts.Service.Services.Interfaces;
 
 public interface IContactService
 {
-    Task AddAsync(ContactDto dto);
+    Task<Result<Contact>> AddAsync(ContactDto dto);
+
+    Task<IList<ContactDto>> FindAsync(short? regionId);
 }

@@ -2,32 +2,39 @@
 using RegionalContacts.Core.Dto;
 using RegionalContacts.Service.Services.Interfaces;
 
-namespace Regional.Contacts.API.Controllers
+namespace Regional.Contacts.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ContactController(IContactService service) : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ContactController : ControllerBase
+    private readonly IContactService _service = service;
+
+    [HttpPost]
+    public async Task<IActionResult> Post(ContactDto dto)
     {
-        private readonly IContactService _service;
-
-        public ContactController(IContactService service)
+        try
         {
-            _service = service;
+            var result = await _service.AddAsync(dto);
+
+            return result.Success ? Ok(result): BadRequest(result);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Post(ContactDto dto)
+        catch (Exception ex)
         {
-            try
-            {
-                await _service.AddAsync(dto);   
-                return Ok();
-            }
-            catch (Exception ex)
-            {
+            return BadRequest(ex);
+        }
+    }
 
-                return BadRequest(ex);
-            }
+    [HttpGet]
+    public async Task<IActionResult> Get([FromQuery] short? regionId)
+    {
+        try
+        {
+            return Ok(await _service.FindAsync(regionId));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex);
         }
     }
 }
