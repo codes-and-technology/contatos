@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Application", "1 - Application", "{EFDAA32F-A11D-4831-80F4-9777D5DFE488}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Core", "2 - Core", "{AE426AA9-9D3C-4DD0-8C26-21C4D0AB34C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infra", "4 - Infra", "{DC0771B2-D3F5-4D41-9B74-8E0D85935426}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegionalContacts.Infrastructure", "Infrastructure\RegionalContacts.Infrastructure.csproj", "{6AF16B87-4667-4828-9EC1-3D9F8DC570D6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegionalContacts.Core", "Domain\RegionalContacts.Core.csproj", "{1A1CFCCC-F127-43B4-ABAD-2E483A67B35C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegionalContacts.api", "regional-contacts-api\RegionalContacts.api.csproj", "{49BDF64C-B512-454A-9B63-3EF6AC15958C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Service", "3 - Service", "{A503A7FB-C416-41C9-8956-0FF450AC3BA8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegionalContacts.Service", "RegionalContacts.Service\RegionalContacts.Service.csproj", "{B05047D9-E871-4034-9E57-647046339E33}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6AF16B87-4667-4828-9EC1-3D9F8DC570D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF16B87-4667-4828-9EC1-3D9F8DC570D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF16B87-4667-4828-9EC1-3D9F8DC570D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF16B87-4667-4828-9EC1-3D9F8DC570D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A1CFCCC-F127-43B4-ABAD-2E483A67B35C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A1CFCCC-F127-43B4-ABAD-2E483A67B35C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A1CFCCC-F127-43B4-ABAD-2E483A67B35C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A1CFCCC-F127-43B4-ABAD-2E483A67B35C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49BDF64C-B512-454A-9B63-3EF6AC15958C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49BDF64C-B512-454A-9B63-3EF6AC15958C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49BDF64C-B512-454A-9B63-3EF6AC15958C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49BDF64C-B512-454A-9B63-3EF6AC15958C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B05047D9-E871-4034-9E57-647046339E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B05047D9-E871-4034-9E57-647046339E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B05047D9-E871-4034-9E57-647046339E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B05047D9-E871-4034-9E57-647046339E33}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6AF16B87-4667-4828-9EC1-3D9F8DC570D6} = {DC0771B2-D3F5-4D41-9B74-8E0D85935426}
+		{1A1CFCCC-F127-43B4-ABAD-2E483A67B35C} = {AE426AA9-9D3C-4DD0-8C26-21C4D0AB34C7}
+		{49BDF64C-B512-454A-9B63-3EF6AC15958C} = {EFDAA32F-A11D-4831-80F4-9777D5DFE488}
+		{B05047D9-E871-4034-9E57-647046339E33} = {A503A7FB-C416-41C9-8956-0FF450AC3BA8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {018EFE6B-E9FD-4112-BACD-4F6AD07A8B3C}
+	EndGlobalSection
+EndGlobal
