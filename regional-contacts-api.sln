@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Service", "3 - Service"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegionalContacts.Service", "Service\RegionalContacts.Service.csproj", "{B05047D9-E871-4034-9E57-647046339E33}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Tests", "5 - Tests", "{3237C23F-EFB3-4C1C-8C99-2652EDB07664}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegionalContacts.Tests", "RegionalContacts.Tests\RegionalContacts.Tests.csproj", "{4849AC17-B456-4FB4-A730-AF403D52D81E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{B05047D9-E871-4034-9E57-647046339E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B05047D9-E871-4034-9E57-647046339E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B05047D9-E871-4034-9E57-647046339E33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4849AC17-B456-4FB4-A730-AF403D52D81E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4849AC17-B456-4FB4-A730-AF403D52D81E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4849AC17-B456-4FB4-A730-AF403D52D81E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4849AC17-B456-4FB4-A730-AF403D52D81E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,7 @@ Global
 		{1A1CFCCC-F127-43B4-ABAD-2E483A67B35C} = {AE426AA9-9D3C-4DD0-8C26-21C4D0AB34C7}
 		{49BDF64C-B512-454A-9B63-3EF6AC15958C} = {EFDAA32F-A11D-4831-80F4-9777D5DFE488}
 		{B05047D9-E871-4034-9E57-647046339E33} = {A503A7FB-C416-41C9-8956-0FF450AC3BA8}
+		{4849AC17-B456-4FB4-A730-AF403D52D81E} = {3237C23F-EFB3-4C1C-8C99-2652EDB07664}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {018EFE6B-E9FD-4112-BACD-4F6AD07A8B3C}

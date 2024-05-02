@@ -43,7 +43,8 @@ public class ContactController(IContactService service) : ControllerBase
     {
         try
         {
-            return Ok(await _service.UpdateAsync(id, dto));
+            var result = await _service.UpdateAsync(id, dto);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
         catch (Exception ex)
         {
@@ -57,7 +58,8 @@ public class ContactController(IContactService service) : ControllerBase
     {
         try
         {
-            return Ok(await _service.DeleteAsync(id));
+            var result = await _service.DeleteAsync(id);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
         catch (Exception ex)
         {
