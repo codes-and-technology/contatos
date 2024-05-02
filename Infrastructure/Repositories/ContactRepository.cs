@@ -17,4 +17,9 @@ public class ContactRepository(ApplicationDbContext context) : Repository<Contac
     {
         return await context.Contacts.Where(f => f.PhoneNumber == number && f.PhoneRegion.RegionNumber == regionId).FirstOrDefaultAsync();
     }
+
+    public async Task<Contact> FindByIdAsync(Guid id)
+    {
+        return await context.Contacts.Include(i => i.PhoneRegion).Where(f => f.Id.Equals(id)).FirstOrDefaultAsync();
+    }
 }

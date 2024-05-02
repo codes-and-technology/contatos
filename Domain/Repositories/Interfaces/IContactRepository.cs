@@ -8,4 +8,7 @@ public interface IContactRepository
     Task<Contact> FindByPhoneNumberAsync(string number, short regionId);
 
     Task<IList<Contact>> FindAllAsync();
+    Task<Contact> FindByIdAsync(Guid id);
+
+    Task DeleteAsync(Contact entity);
 }

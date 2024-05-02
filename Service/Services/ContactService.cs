@@ -43,12 +43,7 @@ public partial class ContactService(IUnitOfWork unitOfWork) : IContactService
         if (result.Errors.Count > 0)
             return result;
 
-        var phoneRegion = await _unitOfWork.PhoneRegions.GetByRegionNumberAsync(dto.RegionNumber);
-
-        if (phoneRegion is null)
-        {
-            phoneRegion = new PhoneRegion { CreatedDate = DateTime.Now, Id = Guid.NewGuid(), RegionNumber = dto.RegionNumber };
-        }
+        PhoneRegion phoneRegion = await ValidatePhoneRegionAsync(dto);
 
         Contact contact = new()
         {
@@ -66,6 +61,59 @@ public partial class ContactService(IUnitOfWork unitOfWork) : IContactService
 
         result.Object = contact;
 
+        return result;
+    }
+
+    public async Task<Result<Contact>> UpdateAsync(Guid id, ContactDto dto)
+    {
+        var result = new Result<Contact>();
+
+        await BasicValidation(dto, result);
+        if (result.Errors.Count > 0)
+            return result;        
+
+        var phoneRegion = await _unitOfWork.PhoneRegions.GetByRegionNumberAsync(dto.RegionNumber);
+
+        var contact = await _unitOfWork.Contacts.FindByIdAsync(id);
+        contact.Name = dto.Name;
+        contact.Email = dto.Email;
+        contact.PhoneNumber = dto.PhoneNumber;
+
+        if (dto.RegionNumber != contact.PhoneRegion.RegionNumber && phoneRegion is null)
+        {
+            phoneRegion = new PhoneRegion
+            {
+                CreatedDate = DateTime.Now,
+                RegionNumber = dto.RegionNumber,
+                Id = Guid.NewGuid(),
+            };
+
+            await _unitOfWork.PhoneRegions.AddAsync(phoneRegion);
+        }
+            
+        contact.PhoneRegion = phoneRegion;
+
+        await _unitOfWork.CommitAsync();
+
+        result.Object = contact;
+        return result;
+    }
+
+    public async Task<Result<Contact>> DeleteAsync(Guid id)
+    {
+        var result = new Result<Contact>();
+        var contact = await _unitOfWork.Contacts.FindByIdAsync(id);
+
+        if (contact is null)
+        {
+            result.Errors.Add("Contato não encontrado");
+            return result;
+        }
+
+        await _unitOfWork.Contacts.DeleteAsync(contact);
+        await _unitOfWork.CommitAsync();
+
+        result.Success = true;
         return result;
     }
 
@@ -104,7 +152,6 @@ public partial class ContactService(IUnitOfWork unitOfWork) : IContactService
         if (result.Errors.Count == 0)
             result.Success = true;
     }
-
     private bool IsValidPhoneNumber(ContactDto dto)
     {
         dto.PhoneNumber = dto.PhoneNumber.Trim()
@@ -160,5 +207,13 @@ public partial class ContactService(IUnitOfWork unitOfWork) : IContactService
         {
             return false;
         }
+    }
+    private async Task<PhoneRegion> ValidatePhoneRegionAsync(ContactDto dto)
+    {
+        var phoneRegion = await _unitOfWork.PhoneRegions.GetByRegionNumberAsync(dto.RegionNumber);
+
+        phoneRegion ??= new PhoneRegion { CreatedDate = DateTime.Now, Id = Guid.NewGuid(), RegionNumber = dto.RegionNumber };
+
+        return phoneRegion;
     }
 }

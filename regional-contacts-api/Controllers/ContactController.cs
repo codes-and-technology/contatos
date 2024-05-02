@@ -37,4 +37,32 @@ public class ContactController(IContactService service) : ControllerBase
             return BadRequest(ex);
         }
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(Guid id, ContactDto dto)
+    {
+        try
+        {
+            return Ok(await _service.UpdateAsync(id, dto));
+        }
+        catch (Exception ex)
+        {
+
+            return BadRequest(ex);
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        try
+        {
+            return Ok(await _service.DeleteAsync(id));
+        }
+        catch (Exception ex)
+        {
+
+            return BadRequest(ex);
+        }
+    }
 }
