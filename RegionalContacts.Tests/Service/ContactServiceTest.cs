@@ -1,5 +1,5 @@
 ﻿using Moq;
-using RegionalContacts.Core.Dto;
+using RegionalContacts.Core.Dto.Contato;
 using RegionalContacts.Core.Entity;
 using RegionalContacts.Core.Repositories.Interfaces;
 using RegionalContacts.Service.Services;
@@ -64,7 +64,7 @@ public class ContactServiceTest
             });
 
         
-        var dto = new ContactDto
+        var dto = new ContactCreateDto
         {
             Email = email,
             PhoneNumber = phone,
@@ -72,7 +72,7 @@ public class ContactServiceTest
             Name = name
         };
 
-        var result = await service.AddAsync(dto);
+        var result = await service.CreateAsync(dto);
 
         Assert.True(result.Errors.Count > 0);
     }
@@ -91,7 +91,7 @@ public class ContactServiceTest
 
         unitOfWorkMock.Setup(s => s.PhoneRegions.GetByRegionNumberAsync(It.IsAny<short>())).ReturnsAsync(null as PhoneRegion);
 
-        var dto = new ContactDto
+        var dto = new ContactCreateDto
         {
             Email = email,
             PhoneNumber = phone,
@@ -99,7 +99,7 @@ public class ContactServiceTest
             Name = name
         };
 
-        var result = await service.AddAsync(dto);
+        var result = await service.CreateAsync(dto);
 
         Assert.True(result.Success);
     }
@@ -161,7 +161,7 @@ public class ContactServiceTest
         unitOfWorkMock.Setup(s => s.PhoneRegions.GetByRegionNumberAsync(It.IsAny<short>())).ReturnsAsync(null as PhoneRegion);
         unitOfWorkMock.Setup(s => s.Contacts.FindByIdAsync(It.IsAny<Guid>())).ReturnsAsync(contact);
 
-        var dto = new ContactDto
+        var dto = new ContactUpdateDto
         {
             Email = email,
             PhoneNumber = phone,
@@ -206,7 +206,7 @@ public class ContactServiceTest
         unitOfWorkMock.Setup(s => s.PhoneRegions.GetByRegionNumberAsync(It.IsAny<short>())).ReturnsAsync(null as PhoneRegion);
         unitOfWorkMock.Setup(s => s.Contacts.FindByIdAsync(It.IsAny<Guid>())).ReturnsAsync(contact);
 
-        var dto = new ContactDto
+        var dto = new ContactUpdateDto
         {
             Email = email,
             PhoneNumber = phone,
