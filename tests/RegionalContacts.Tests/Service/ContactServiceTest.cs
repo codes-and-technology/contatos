@@ -2,8 +2,8 @@
 using RegionalContacts.Domain.Dto.Contato;
 using RegionalContacts.Domain.Entity;
 using RegionalContacts.Domain.Interfaces.Repositories;
+using RegionalContacts.Infrastructure.Repositories.Redis;
 using RegionalContacts.Service;
-using RegionalContacts.Service.Services;
 
 namespace RegionalContacts.Tests.Service;
 
@@ -29,7 +29,12 @@ public class ContactServiceTest
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         unitOfWorkMock.Setup(s => s.Contacts.FindAllAsync()).ReturnsAsync(list);
 
-        ContactService service = new(unitOfWorkMock.Object);
+        var cache = new Mock<IRedisCache<ContactDto>>();
+        cache.Setup(s => s.SaveCacheAsync(It.IsAny<string>(), It.IsAny<List<ContactDto>>())).Verifiable();
+        cache.Setup(s => s.GetCacheAsync(It.IsAny<string>())).ReturnsAsync(new List<ContactDto>());
+        cache.Setup(s => s.ClearCacheAsync(It.IsAny<string>())).Verifiable();
+
+        ContactService service = new(unitOfWorkMock.Object, cache.Object);
 
         var result = await service.FindAsync(null);
 
@@ -47,7 +52,12 @@ public class ContactServiceTest
       
         var unitOfWorkMock = new Mock<IUnitOfWork>();
 
-        ContactService service = new(unitOfWorkMock.Object);
+        var cache = new Mock<IRedisCache<ContactDto>>();
+        cache.Setup(s => s.SaveCacheAsync(It.IsAny<string>(), It.IsAny<List<ContactDto>>())).Verifiable();
+        cache.Setup(s => s.GetCacheAsync(It.IsAny<string>())).ReturnsAsync(new List<ContactDto>());
+        cache.Setup(s => s.ClearCacheAsync(It.IsAny<string>())).Verifiable();
+
+        ContactService service = new(unitOfWorkMock.Object, cache.Object);
 
         unitOfWorkMock.Setup(s => s.Contacts
         .FindByPhoneNumberAsync(It.IsAny<string>(), It.IsAny<short>()))
@@ -84,7 +94,12 @@ public class ContactServiceTest
     {
         var unitOfWorkMock = new Mock<IUnitOfWork>();
 
-        ContactService service = new(unitOfWorkMock.Object);
+        var cache = new Mock<IRedisCache<ContactDto>>();
+        cache.Setup(s => s.SaveCacheAsync(It.IsAny<string>(), It.IsAny<List<ContactDto>>()));
+        cache.Setup(s => s.GetCacheAsync(It.IsAny<string>())).ReturnsAsync(new List<ContactDto>());
+        cache.Setup(s => s.ClearCacheAsync(It.IsAny<string>())).Verifiable();
+
+        ContactService service = new(unitOfWorkMock.Object, cache.Object);
 
         unitOfWorkMock.Setup(s => s.Contacts
         .FindByPhoneNumberAsync(It.IsAny<string>(), It.IsAny<short>()))
@@ -111,12 +126,18 @@ public class ContactServiceTest
     {
         var unitOfWorkMock = new Mock<IUnitOfWork>();
 
-        ContactService service = new(unitOfWorkMock.Object);
+        var id = Guid.NewGuid();
 
+        var cache = new Mock<IRedisCache<ContactDto>>();
+        cache.Setup(s => s.SaveCacheAsync(It.IsAny<string>(), It.IsAny<List<ContactDto>>())).Verifiable();
+        cache.Setup(s => s.GetCacheAsync(It.IsAny<string>())).ReturnsAsync(new List<ContactDto> { new ContactDto { Id = id.ToString() } });
+        cache.Setup(s => s.ClearCacheAsync(It.IsAny<string>())).Verifiable();
 
-        unitOfWorkMock.Setup(s => s.Contacts.FindByIdAsync(It.IsAny<Guid>())).ReturnsAsync(new Contact { Id =  Guid.NewGuid()});
+        ContactService service = new(unitOfWorkMock.Object, cache.Object);
 
-        var result = await service.DeleteAsync(Guid.NewGuid());
+        unitOfWorkMock.Setup(s => s.Contacts.FindByIdAsync(It.IsAny<Guid>())).ReturnsAsync(new Contact { Id = id });
+
+        var result = await service.DeleteAsync(id);
 
         Assert.True(result.Success);
     }
@@ -126,7 +147,12 @@ public class ContactServiceTest
     {
         var unitOfWorkMock = new Mock<IUnitOfWork>();
 
-        ContactService service = new(unitOfWorkMock.Object);
+        var cache = new Mock<IRedisCache<ContactDto>>();
+        cache.Setup(s => s.SaveCacheAsync(It.IsAny<string>(), It.IsAny<List<ContactDto>>())).Verifiable();
+        cache.Setup(s => s.GetCacheAsync(It.IsAny<string>())).ReturnsAsync(new List<ContactDto>());
+        cache.Setup(s => s.ClearCacheAsync(It.IsAny<string>())).Verifiable();
+
+        ContactService service = new(unitOfWorkMock.Object, cache.Object);
 
 
         unitOfWorkMock.Setup(s => s.Contacts.FindByIdAsync(It.IsAny<Guid>())).ReturnsAsync(null as Contact);
@@ -142,7 +168,12 @@ public class ContactServiceTest
     {
         var unitOfWorkMock = new Mock<IUnitOfWork>();
 
-        ContactService service = new(unitOfWorkMock.Object);
+        var cache = new Mock<IRedisCache<ContactDto>>();
+        cache.Setup(s => s.SaveCacheAsync(It.IsAny<string>(), It.IsAny<List<ContactDto>>())).Verifiable();
+        cache.Setup(s => s.GetCacheAsync(It.IsAny<string>())).ReturnsAsync(new List<ContactDto>());
+        cache.Setup(s => s.ClearCacheAsync(It.IsAny<string>())).Verifiable();
+
+        ContactService service = new(unitOfWorkMock.Object, cache.Object);
 
         var contact = new Contact
         {
@@ -187,7 +218,12 @@ public class ContactServiceTest
 
         var unitOfWorkMock = new Mock<IUnitOfWork>();
 
-        ContactService service = new(unitOfWorkMock.Object);
+        var cache = new Mock<IRedisCache<ContactDto>>();
+        cache.Setup(s => s.SaveCacheAsync(It.IsAny<string>(), It.IsAny<List<ContactDto>>())).Verifiable();
+        cache.Setup(s => s.GetCacheAsync(It.IsAny<string>())).ReturnsAsync(new List<ContactDto>());
+        cache.Setup(s => s.ClearCacheAsync(It.IsAny<string>())).Verifiable();
+
+        ContactService service = new(unitOfWorkMock.Object, cache.Object);
 
         var contact = new Contact
         {

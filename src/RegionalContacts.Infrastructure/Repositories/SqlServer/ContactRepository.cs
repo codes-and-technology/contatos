@@ -1,10 +1,8 @@
-﻿using Infrastructure.Repository;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using RegionalContacts.Domain.Entity;
 using RegionalContacts.Domain.Interfaces.Repositories;
-using RegionalContacts.Infrastructure.Repository;
 
-namespace RegionalContacts.Infrastructure.Repositories;
+namespace RegionalContacts.Infrastructure.Repositories.SqlServer;
 
 public class ContactRepository(ApplicationDbContext context) : Repository<Contact>(context), IContactRepository
 {

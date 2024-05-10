@@ -1,9 +1,8 @@
-﻿using Infrastructure.Repository;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using RegionalContacts.Domain.Entity;
 using RegionalContacts.Domain.Interfaces.Repositories;
 
-namespace RegionalContacts.Infrastructure.Repository;
+namespace RegionalContacts.Infrastructure.Repositories.SqlServer;
 
 public class Repository<T> : IRepository<T> where T : EntityBase
 {
@@ -17,8 +16,8 @@ public class Repository<T> : IRepository<T> where T : EntityBase
     }
 
     public virtual async Task AddAsync(T entity) => await _dbSet.AddAsync(entity);
-    
-    public virtual async Task DeleteAsync(T entity) => await Task.Run(() => _dbSet.Remove(entity));    
+
+    public virtual async Task DeleteAsync(T entity) => await Task.Run(() => _dbSet.Remove(entity));
 
     public virtual async Task<IList<T>> FindAllAsync() => await _dbSet.ToListAsync();
 

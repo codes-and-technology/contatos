@@ -1,4 +1,4 @@
-﻿namespace Regional.Contacts.API
+﻿namespace RegionalContacts.Api
 {
     public class LoggingMiddleware
     {
@@ -13,37 +13,39 @@
 
         public async Task Invoke(HttpContext httpContext)
         {
-            // Log the request details
+            // Log da solicitação
             _logger.LogInformation($"Request: {httpContext.Request.Method} {httpContext.Request.Path}");
 
-            // Log the request body
-            httpContext.Request.EnableBuffering();
+            // Captura o corpo da solicitação
             var requestBodyStream = new MemoryStream();
+            var originalRequestBody = httpContext.Request.Body;
             await httpContext.Request.Body.CopyToAsync(requestBodyStream);
             requestBodyStream.Seek(0, SeekOrigin.Begin);
             var requestBodyText = await new StreamReader(requestBodyStream).ReadToEndAsync();
             _logger.LogInformation($"Request Body: {requestBodyText}");
 
-            // Capture the response
-            var originalBodyStream = httpContext.Response.Body;
-            using (var responseBody = new MemoryStream())
-            {
-                httpContext.Response.Body = responseBody;
+            // Configura o corpo da solicitação para ser lido novamente no pipeline
+            requestBodyStream.Seek(0, SeekOrigin.Begin);
+            httpContext.Request.Body = requestBodyStream;
 
-                await _next(httpContext);
+            // Captura a resposta
+            var originalResponseBodyStream = httpContext.Response.Body;
+            var responseBodyStream = new MemoryStream();
+            httpContext.Response.Body = responseBodyStream;
 
-                // Log the response details
-                _logger.LogInformation($"Response: {httpContext.Response.StatusCode}");
+            await _next(httpContext);
 
-                // Log the response body
-                responseBody.Seek(0, SeekOrigin.Begin);
-                var responseBodyText = await new StreamReader(responseBody).ReadToEndAsync();
-                _logger.LogInformation($"Response Body: {responseBodyText}");
+            // Log da resposta
+            _logger.LogInformation($"Response: {httpContext.Response.StatusCode}");
+            responseBodyStream.Seek(0, SeekOrigin.Begin);
+            var responseBodyText = await new StreamReader(responseBodyStream).ReadToEndAsync();
+            _logger.LogInformation($"Response Body: {responseBodyText}");
 
-                // Copy the response body to the original stream
-                responseBody.Seek(0, SeekOrigin.Begin);
-                await responseBody.CopyToAsync(originalBodyStream);
-            }
+            // Configura o corpo da resposta para ser enviado ao cliente
+            responseBodyStream.Seek(0, SeekOrigin.Begin);
+            await responseBodyStream.CopyToAsync(originalResponseBodyStream);
+            httpContext.Response.Body = originalResponseBodyStream;
+
         }
     }
 

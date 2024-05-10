@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RegionalContacts.Domain.Entity;
 
-namespace RegionalContacts.Infrastructure.Repository.Configurations;
+namespace RegionalContacts.Infrastructure.Repositories.SqlServer.Configurations;
 
 public class ContactConfiguration : IEntityTypeConfiguration<Contact>
 {

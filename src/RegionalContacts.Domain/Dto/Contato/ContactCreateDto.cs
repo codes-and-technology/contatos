@@ -32,6 +32,6 @@ public class ContactCreateDto
     /// Número da região do telefone do contato.
     /// </summary>
     [Required(ErrorMessage = "O número da região é obrigatório.")]
-    [Range(1, 99, ErrorMessage = "O número da região deve estar entre 1 e 99.")]
+    [Range(11, 99, ErrorMessage = "O número da região deve estar entre 11 e 99.")]
     public short RegionNumber { get; set; }
 }

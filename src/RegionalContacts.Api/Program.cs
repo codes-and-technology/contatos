@@ -1,14 +1,14 @@
-using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Regional.Contacts.API;
+using RegionalContacts.Api;
 using RegionalContacts.Domain.Interfaces.Repositories;
-using RegionalContacts.Infrastructure.Repositories;
-using RegionalContacts.Infrastructure.Repositories.Configurations;
+using RegionalContacts.Infrastructure.Repositories.SqlServer;
+using RegionalContacts.Infrastructure.Repositories.SqlServer.Configurations;
 using RegionalContacts.Service;
 using RegionalContacts.Service.Services.Interfaces;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using RegionalContacts.Infrastructure.Repositories.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +24,8 @@ builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<IPhoneRegionRepository, PhoneRegionRepository>();
 builder.Services.AddScoped<IContactService, ContactService>();
 
+builder.Services.AddRedis(configuration);
+//builder.Services.AddLogging(builder => builder.AddConsole());
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 

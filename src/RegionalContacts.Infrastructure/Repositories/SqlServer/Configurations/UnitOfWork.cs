@@ -1,7 +1,7 @@
-﻿using Infrastructure.Repository;
-using RegionalContacts.Domain.Interfaces.Repositories;
+﻿using RegionalContacts.Domain.Interfaces.Repositories;
+using RegionalContacts.Infrastructure.Repositories.SqlServer;
 
-namespace RegionalContacts.Infrastructure.Repositories.Configurations;
+namespace RegionalContacts.Infrastructure.Repositories.SqlServer.Configurations;
 
 public class UnitOfWork : IUnitOfWork
 {

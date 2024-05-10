@@ -4,7 +4,7 @@ using RegionalContacts.Domain.Dto.Contato;
 using RegionalContacts.Domain.Entity;
 using RegionalContacts.Service.Services.Interfaces;
 
-namespace Regional.Contacts.API.Controllers
+namespace RegionalContacts.Api.Controllers
 {
     /// <summary>
     /// Controlador para manipulação de contatos.

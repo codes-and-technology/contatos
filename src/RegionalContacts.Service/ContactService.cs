@@ -3,19 +3,40 @@ using RegionalContacts.Domain.Dto.Contato;
 using RegionalContacts.Domain.Entity;
 using RegionalContacts.Domain.Helpers.Validations;
 using RegionalContacts.Domain.Interfaces.Repositories;
+using RegionalContacts.Infrastructure.Repositories.Redis;
 using RegionalContacts.Service.Services.Interfaces;
 
 namespace RegionalContacts.Service
 {
-    public partial class ContactService(IUnitOfWork unitOfWork) : IContactService
+    public partial class ContactService(IUnitOfWork unitOfWork, IRedisCache<ContactDto> redis) : IContactService
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly IRedisCache<ContactDto> _redis = redis;
 
         public async Task<IList<ContactDto>> FindAsync(short? regionId)
         {
             List<ContactDto> list = [];
 
+            var contactsCache = await _redis.GetCacheAsync("Contacts");
+
+            if (contactsCache.Any())
+            {
+                if (regionId.HasValue)
+                    return contactsCache.Where(f => !regionId.HasValue || f.RegionNumber == regionId.Value).ToList();
+
+                return contactsCache;
+            }
+
             var result = await _unitOfWork.Contacts.FindAllAsync();
+
+            await _redis.SaveCacheAsync("Contacts", result.Select(f => new ContactDto
+            {
+                Id = f.Id.ToString(),
+                Email = f.Email,
+                Name = f.Name,
+                PhoneNumber = f.PhoneNumber,
+                RegionNumber = f.PhoneRegion.RegionNumber
+            }).ToList());
 
             if (regionId.HasValue)
                 result = result.Where(f => f.PhoneRegion.RegionNumber == regionId.Value).ToList();
@@ -67,11 +88,11 @@ namespace RegionalContacts.Service
             };
 
             await _unitOfWork.Contacts.AddAsync(contact);
-
             await _unitOfWork.CommitAsync();
 
-            result.Data = contact;
+            await _redis.ClearCacheAsync("Contacts");
 
+            result.Data = contact;
             return result;
         }
 
@@ -104,6 +125,18 @@ namespace RegionalContacts.Service
 
             await _unitOfWork.CommitAsync();
 
+            var contactsCache = await _redis.GetCacheAsync("Contacts");
+
+            contactsCache.Where(f => f.Id == id.ToString()).ToList().ForEach(f =>
+            {
+                f.Email = contact.Email;
+                f.Name = contact.Name;
+                f.PhoneNumber = contact.PhoneNumber;
+                f.RegionNumber = contact.PhoneRegion.RegionNumber;
+            });
+
+            await _redis.ClearCacheAsync("Contacts");            
+
             result.Data = contact;
             return result;
         }
@@ -121,6 +154,8 @@ namespace RegionalContacts.Service
 
             await _unitOfWork.Contacts.DeleteAsync(contact);
             await _unitOfWork.CommitAsync();
+
+            await _redis.ClearCacheAsync("Contacts");
 
             return result;
         }

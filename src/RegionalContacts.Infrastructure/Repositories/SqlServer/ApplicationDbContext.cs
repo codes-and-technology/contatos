@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using RegionalContacts.Domain.Entity;
 
 
-namespace Infrastructure.Repository;
+namespace RegionalContacts.Infrastructure.Repositories.SqlServer;
 
 public class ApplicationDbContext : DbContext
 {
@@ -27,7 +27,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<PhoneRegion> PhoneRegions { get; set; }
 
-    
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
