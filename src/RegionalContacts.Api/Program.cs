@@ -1,6 +1,7 @@
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Regional.Contacts.API;
 using RegionalContacts.Domain.Interfaces.Repositories;
 using RegionalContacts.Infrastructure.Repositories;
 using RegionalContacts.Infrastructure.Repositories.Configurations;
@@ -55,6 +56,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseLoggingApi();
 
 app.MapControllers();
 
