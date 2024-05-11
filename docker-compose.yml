@@ -1,0 +1,39 @@
+ version: '3.4'
+
+ services:
+   db:
+     user: root
+     image: mcr.microsoft.com/mssql/server:2019-latest
+     environment:
+       ACCEPT_EULA: "Y"
+       SA_PASSWORD: "sql@123456"
+       MSSQL_PID: Express
+     ports:
+       - "1433:1433"
+     volumes:
+       - C:\dados\volumes\sqlserver\Fiap_Fase1_TechChallenge_Contatos:/var/opt/mssql/data
+     networks:
+       - minha-rede
+   regionalcontacts.api:
+     image: ${DOCKER_REGISTRY-}regionalcontactsapi
+     build:
+       context: .
+       dockerfile: src/RegionalContacts.Api/Dockerfile      
+     ports:
+       - "5001:80"
+     depends_on:
+       - db
+     networks:
+       - minha-rede
+   redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - minha-rede
+
+ networks:
+   minha-rede:
+
+ volumes:
+   db-data:
