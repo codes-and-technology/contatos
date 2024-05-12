@@ -27,7 +27,7 @@
 	</ItemGroup>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-	  <Exec Command="xcopy /y &quot;$(SolutionDir)src\RegionalContacts.Api\appsettings.json&quot; &quot;$(TargetDir)&quot;&#xD;&#xA;" />
+	  <Exec Command="xcopy /y &quot;$(SolutionDir)RegionalContacts.Api\appsettings.json&quot; &quot;$(TargetDir)&quot;&#xD;&#xA;" />
 	</Target>
 
 </Project>

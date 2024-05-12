@@ -75,7 +75,7 @@ namespace RegionalContacts.Service
             if (result.Errors.Count > 0)
                 return result;
 
-            PhoneRegion phoneRegion = await ValidatePhoneRegionAsync(dto.RegionNumber);
+            PhoneRegion phoneRegion = await GetOrCreatePhoneRegionAsync(dto.RegionNumber);
 
             contact = new()
             {
@@ -121,7 +121,7 @@ namespace RegionalContacts.Service
             contact.Name = dto.Name;
             contact.Email = dto.Email;
             contact.PhoneNumber = dto.PhoneNumber;
-            contact.PhoneRegion = await ValidatePhoneRegionAsync(dto.RegionNumber);
+            contact.PhoneRegion = await GetOrCreatePhoneRegionAsync(dto.RegionNumber);     
 
             await _unitOfWork.CommitAsync();
 
@@ -160,11 +160,15 @@ namespace RegionalContacts.Service
             return result;
         }
 
-        private async Task<PhoneRegion> ValidatePhoneRegionAsync(short regionNumber)
+        private async Task<PhoneRegion> GetOrCreatePhoneRegionAsync(short regionNumber)
         {
             var phoneRegion = await _unitOfWork.PhoneRegions.GetByRegionNumberAsync(regionNumber);
 
-            phoneRegion ??= new PhoneRegion { CreatedDate = DateTime.Now, Id = Guid.NewGuid(), RegionNumber = regionNumber };
+            if (phoneRegion is null)
+            {
+                phoneRegion = new PhoneRegion { CreatedDate = DateTime.Now, Id = Guid.NewGuid(), RegionNumber = regionNumber };
+                await _unitOfWork.PhoneRegions.AddAsync(phoneRegion);
+            }
 
             return phoneRegion;
         }

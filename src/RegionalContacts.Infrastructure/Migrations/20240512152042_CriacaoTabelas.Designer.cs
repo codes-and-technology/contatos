@@ -12,8 +12,8 @@ using RegionalContacts.Infrastructure.Repositories.SqlServer;
 namespace RegionalContacts.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240501173711_CreateTable")]
-    partial class CreateTable
+    [Migration("20240512152042_CriacaoTabelas")]
+    partial class CriacaoTabelas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,12 +50,8 @@ namespace RegionalContacts.Infrastructure.Migrations
                         .HasColumnType("VARCHAR(9)")
                         .HasColumnName("NumeroTelefone");
 
-                    b.Property<Guid>("PhoneRegionId")
+                    b.Property<Guid?>("PhoneRegionId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("RegionId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("IdRegiao");
 
                     b.HasKey("Id");
 
@@ -89,8 +85,7 @@ namespace RegionalContacts.Infrastructure.Migrations
                     b.HasOne("RegionalContacts.Domain.Entity.PhoneRegion", "PhoneRegion")
                         .WithMany("Contacts")
                         .HasForeignKey("PhoneRegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("IdArea");
 
                     b.Navigation("PhoneRegion");
                 });

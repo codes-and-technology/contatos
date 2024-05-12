@@ -25,7 +25,7 @@ builder.Services.AddScoped<IPhoneRegionRepository, PhoneRegionRepository>();
 builder.Services.AddScoped<IContactService, ContactService>();
 
 builder.Services.AddRedis(configuration);
-//builder.Services.AddLogging(builder => builder.AddConsole());
+builder.Services.AddLogging(builder => builder.AddConsole());
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 

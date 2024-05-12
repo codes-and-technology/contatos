@@ -47,7 +47,7 @@ namespace RegionalContacts.Infrastructure.Migrations
                         .HasColumnType("VARCHAR(9)")
                         .HasColumnName("NumeroTelefone");
 
-                    b.Property<Guid>("PhoneRegionId")
+                    b.Property<Guid?>("PhoneRegionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -82,8 +82,6 @@ namespace RegionalContacts.Infrastructure.Migrations
                     b.HasOne("RegionalContacts.Domain.Entity.PhoneRegion", "PhoneRegion")
                         .WithMany("Contacts")
                         .HasForeignKey("PhoneRegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("IdArea");
 
                     b.Navigation("PhoneRegion");
