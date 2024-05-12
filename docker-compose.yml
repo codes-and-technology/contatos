@@ -14,23 +14,26 @@
        - C:\dados\volumes\sqlserver\Fiap_Fase1_TechChallenge_Contatos:/var/opt/mssql/data
      networks:
        - minha-rede
-   regionalcontacts.api:
-     image: ${DOCKER_REGISTRY-}regionalcontactsapi
-     build:
-       context: .
-       dockerfile: src/RegionalContacts.Api/Dockerfile      
-     ports:
-       - "5001:80"
-     depends_on:
-       - db
-     networks:
-       - minha-rede
    redis:
     image: redis:latest
     ports:
       - "6379:6379"
     networks:
       - minha-rede
+   regionalcontacts.api:
+    image: ${DOCKER_REGISTRY-}regionalcontactsapi
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    build:
+      context: .
+      dockerfile: src/RegionalContacts.Api/Dockerfile      
+    ports:
+      - "5001:80"
+    depends_on:
+      - db
+      - redis
+    networks:
+       - minha-rede
 
  networks:
    minha-rede:
