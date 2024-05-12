@@ -40,10 +40,3 @@ Este projeto é configurado para ser executado em um ambiente Docker Windows no 
 docker-compose up
 
 Isso iniciará todos os serviços necessários para o projeto, incluindo o banco de dados e a aplicação.
-
-## Contribuição
-
-Contribuições são bem-vindas! Se você deseja contribuir para este projeto, siga estas etapas:
-
-1. Faça um fork do projeto.
-2. Crie uma branch para a sua nova funcionalidade (git checko
