@@ -9,6 +9,8 @@ using RegionalContacts.Service.Services.Interfaces;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using RegionalContacts.Infrastructure.Repositories.Redis;
+using Prometheus;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,8 @@ builder.Services.AddRedis(configuration);
 builder.Services.AddLogging(builder => builder.AddConsole());
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.UseHttpClientMetrics();
+
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -55,6 +59,44 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+/*INICIO DA CONFIGURAÇÃO - PROMETHEUS*/
+// Custom Metrics to count requests for each endpoint and the method
+var counter = Metrics.CreateCounter("webapimetric", "Counts requests to the WebApiMetrics API endpoints",
+    new CounterConfiguration
+    {
+        LabelNames = new[] { "method", "endpoint" }
+    });
+
+var gauge = Metrics.CreateGauge(
+        "myapp_http_request_duration_seconds",
+        "Tempo médio de resposta das requisições HTTP em segundos.");
+
+app.Use(async (context, next) =>
+{
+    counter.WithLabels(context.Request.Method, context.Request.Path).Inc();
+
+    var stopwatch = Stopwatch.StartNew();
+
+    try
+    {
+        await next();
+    }
+    finally
+    {
+        stopwatch.Stop();
+        var elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
+
+        // Atualizar o medidor de tempo de resposta
+        gauge.Set(elapsedSeconds);
+    }
+});
+
+// Use the prometheus middleware
+app.UseMetricServer();
+app.UseHttpMetrics();
+
+/*FIM DA CONFIGURAÇÃO - PROMETHEUS*/
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -62,5 +104,8 @@ app.UseAuthorization();
 app.UseLoggingApi();
 
 app.MapControllers();
+
+app.UseMetricServer();
+app.UseHttpMetrics();
 
 app.Run();

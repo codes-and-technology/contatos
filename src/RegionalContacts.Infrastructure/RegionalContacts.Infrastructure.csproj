@@ -26,8 +26,4 @@
 		<ProjectReference Include="..\RegionalContacts.Domain\RegionalContacts.Domain.csproj" />
 	</ItemGroup>
 
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-	  <Exec Command="xcopy /y &quot;$(SolutionDir)src\RegionalContacts.Api\appsettings.json&quot; &quot;$(TargetDir)&quot;&#xD;&#xA;" />
-	</Target>
-
 </Project>
