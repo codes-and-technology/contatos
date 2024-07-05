@@ -33,10 +33,9 @@ Update-Database {NOME_MIGRATION} -StartupProject RegionalContacts.Infrastructure
 
 Isso aplicará todas as migrações pendentes e atualizará o banco de dados para a versão mais recente.
 
-## Execução em Ambiente Docker
+## Execução 
 
-Este projeto é configurado para ser executado em um ambiente Docker Windows no modelo Linux. Certifique-se de ter o Docker instalado e em execução na sua máquina. Você pode iniciar o ambiente Docker executando o seguinte comando:
+No Visual Studio, clique em Docker-Compose
 
-docker-compose up
 
 Isso iniciará todos os serviços necessários para o projeto, incluindo o banco de dados e a aplicação.
