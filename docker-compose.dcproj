@@ -15,5 +15,9 @@
     </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
+    <None Include="grafana\provisioning\dashboards\dashboard.yml" />
+    <None Include="grafana\provisioning\dashboards\RegionalContactsAPIDashboard.json" />
+    <None Include="grafana\provisioning\datasources\prometheus_ds.yml" />
+    <None Include="prometheus\prometheus.yml" />
   </ItemGroup>
 </Project>
