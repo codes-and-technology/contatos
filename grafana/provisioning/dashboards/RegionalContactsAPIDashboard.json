@@ -89,7 +89,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(\n  microsoft_aspnetcore_hosting_http_server_request_duration_count{\n    http_response_status_code=~\"2..\",\n    http_route=\"api/Contact\",\n    instance=\"host.docker.internal:5001\",\n    job=\"contatos-api\",\n    network_protocol_version=\"1.1\",\n    url_scheme=\"http\"\n  }\n) or vector(0)",
+          "expr": "sum(http_request_duration_seconds_count{code=~\"2..\",controller=\"Contact\",endpoint=\"api/Contact\"} / 2 )",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -151,7 +151,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(\n  microsoft_aspnetcore_hosting_http_server_request_duration_count{\n    http_response_status_code=~\"4..\",\n    http_route=\"api/Contact\",\n    instance=\"host.docker.internal:5001\",\n    job=\"contatos-api\",\n    network_protocol_version=\"1.1\",\n    url_scheme=\"http\"\n  }\n) or vector(0)",
+          "expr": "sum(http_request_duration_seconds_count{code=~\"4..\",controller=\"Contact\",endpoint=\"api/Contact\"} / 2 ) or vector(0)",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -213,7 +213,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(\n  microsoft_aspnetcore_hosting_http_server_request_duration_count{\n    http_response_status_code=~\"5..\",\n    http_route=\"api/Contact\",\n    instance=\"host.docker.internal:5001\",\n    job=\"contatos-api\",\n    network_protocol_version=\"1.1\",\n    url_scheme=\"http\"\n  }\n) or vector(0)",
+          "expr": "sum(http_request_duration_seconds_count{code=~\"5..\",controller=\"Contact\",endpoint=\"api/Contact\"} / 2 ) or vector(0)",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -275,7 +275,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "(\n  sum(\n    microsoft_aspnetcore_hosting_http_server_request_duration_count{\n      http_response_status_code=~\"2..\",\n      http_route=\"api/Contact\",\n      instance=\"host.docker.internal:5001\",\n      job=\"contatos-api\",\n      network_protocol_version=\"1.1\",\n      url_scheme=\"http\"\n    }\n  ) or vector(0)\n) +\n(\n  sum(\n    microsoft_aspnetcore_hosting_http_server_request_duration_count{\n      http_response_status_code=~\"4..\",\n      http_route=\"api/Contact\",\n      instance=\"host.docker.internal:5001\",\n      job=\"contatos-api\",\n      network_protocol_version=\"1.1\",\n      url_scheme=\"http\"\n    }\n  ) or vector(0)\n) +\n(\n  sum(\n    microsoft_aspnetcore_hosting_http_server_request_duration_count{\n      http_response_status_code=~\"5..\",\n      http_route=\"api/Contact\",\n      instance=\"host.docker.internal:5001\",\n      job=\"contatos-api\",\n      network_protocol_version=\"1.1\",\n      url_scheme=\"http\"\n    }\n  ) or vector(0)\n)\n",
+          "expr": "sum(http_request_duration_seconds_count{controller=\"Contact\",endpoint=\"api/Contact\"} / 2 )",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -478,7 +478,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(http_request_duration_seconds_sum[5m]))\n/\nsum(rate(http_request_duration_seconds_count[5m]))",
+          "expr": "sum(rate(http_request_duration_seconds_sum{job=\"contatos-api\"}[1m])) \n/ \nsum(rate(http_request_duration_seconds_count{job=\"contatos-api\"}[1m]))\n",
           "interval": "",
           "legendFormat": "Média",
           "refId": "A"
@@ -695,7 +695,7 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
