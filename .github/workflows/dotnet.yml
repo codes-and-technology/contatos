@@ -65,7 +65,7 @@ jobs:
           --health-timeout 10s
           --health-retries 5
         ports:
-          - 151555:1433
+          - 66666:1433
 
       redis:
         image: redis:latest
@@ -75,7 +75,7 @@ jobs:
           --health-timeout 10s
           --health-retries 5
         ports:
-          - 151232:6379
+          - 69999:6379
 
     steps:
     - name: Checkout repository
