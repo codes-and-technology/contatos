@@ -87,13 +87,14 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Pull Docker image
+    - name: Build and push Docker Compose image
       run: |
-        docker pull ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
+        docker-compose -f ./docker-compose.yml build
+        docker-compose -f ./docker-compose.yml push
 
-    - name: Run Docker container
+    - name: Run Docker Compose
       run: |
-        docker run -d -p 8080:8080 -p 8081:8081 --name regionalcontacts.api ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
+        docker-compose -f ./docker-compose.yml up -d
 
-    - name: Verify Docker container is running
+    - name: Verify Docker containers are running
       run: docker ps -a
