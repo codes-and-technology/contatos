@@ -24,7 +24,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t regionalcontacts.api:latest -f ./src/RegionalContacts.Api/Dockerfile .
+        docker build -t regionalcontacts.api:latest -f Fiap.AzureDevOps/Dockerfile .
 
     - name: Tag Docker image
       run: |
@@ -33,7 +33,13 @@ jobs:
     - name: Push Docker image
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
-        
+
+    - name: Restore dependencies
+      run: dotnet restore contatos/tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj
+
+    - name: Build solution
+      run: dotnet build contatos/tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj --configuration Release --no-restore
+
     - name: Run tests
       run: dotnet test contatos/tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj --no-build --verbosity normal
 
@@ -42,6 +48,4 @@ jobs:
         docker run -d -p 8080:8080 -p 8081:8081 --name regionalcontacts.api ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
 
     - name: Verify Docker container is running
-      run: |
-        docker ps -a
-
+      run: docker ps -a
