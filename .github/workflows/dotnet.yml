@@ -24,7 +24,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t regionalcontacts.api:latest -f Fiap.AzureDevOps/Dockerfile .
+        docker build -t regionalcontacts.api:latest -f ./src/RegionalContacts.Api/Dockerfile .
 
     - name: Tag Docker image
       run: |
