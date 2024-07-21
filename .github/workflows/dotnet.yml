@@ -75,7 +75,7 @@ jobs:
       run: dotnet test tests/RegionalContacts.Integration.Tests/RegionalContacts.Integration.Tests.csproj
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: test-integracao
     steps:
     - name: Checkout repository
@@ -89,16 +89,16 @@ jobs:
 
     - name: Build and push Docker Compose images
       run: |
-        docker-compose -f ./docker-compose.yml build
-        docker-compose -f ./docker-compose.yml push
+        docker-compose -f ./docker-compose.yml" -f ./docker-compose.override.yml -p dockercompose4048620026943767310 --ansi never build --build-arg
+        docker-compose -f ./docker-compose.yml" -f ./docker-compose.override.yml push
 
     - name: Run Docker Compose
       run: |
-        docker-compose -f ./docker-compose.yml up -d
+        docker-compose -f ./docker-compose.yml -f ./docker-compose.override.yml" -p dockercompose4048620026943767310 --ansi never up -d --no-build
 
     - name: Verify Docker containers are running
       run: docker ps -a
 
     - name: Test API
       run: |
-        curl -X GET http://localhost:8080/api/contacts
+        curl -X GET http://localhost:5001/swagger
