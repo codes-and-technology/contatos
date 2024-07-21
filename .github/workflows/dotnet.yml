@@ -23,7 +23,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t regionalcontacts.api:latest -f ./src/RegionalContacts.Api/Dockerfile .
+        docker build -t regionalcontacts.api:latest -f ./docker-compose .
 
     - name: Tag Docker image
       run: |
