@@ -41,13 +41,13 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Restore dependencies
-      run: dotnet restore contatos/tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj
+      run: dotnet restore tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj
 
     - name: Build solution
-      run: dotnet build contatos/tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj --configuration Release --no-restore
+      run: dotnet build tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj --configuration Release --no-restore
 
     - name: Run tests
-      run: dotnet test contatos/tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj --no-build --verbosity normal
+      run: dotnet test tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj
 
   deploy:
     runs-on: ubuntu-latest
