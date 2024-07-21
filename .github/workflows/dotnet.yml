@@ -92,12 +92,12 @@ jobs:
 
     - name: Build and push Docker Compose images
       run: |
-        docker-compose -f ./docker-compose.yml" -f ./docker-compose.override.yml -p dockercompose4048620026943767310 --ansi never build --build-arg
-        docker-compose -f ./docker-compose.yml" -f ./docker-compose.override.yml push
+        docker-compose -f docker-compose.yml" -f docker-compose.override.yml -p dockercompose4048620026943767310 --ansi never build --build-arg
+        docker-compose -f docker-compose.yml" -f docker-compose.override.yml push
 
     - name: Run Docker Compose
       run: |
-        docker-compose -f ./docker-compose.yml -f ./docker-compose.override.yml" -p dockercompose4048620026943767310 --ansi never up -d --no-build
+        docker-compose -f docker-compose.yml -f docker-compose.override.yml" -p dockercompose4048620026943767310 --ansi never up -d --no-build
 
     - name: Verify Docker containers are running
       run: docker ps -a
