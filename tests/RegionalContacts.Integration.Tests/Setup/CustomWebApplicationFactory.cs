@@ -51,7 +51,7 @@ namespace RegionalContacts.Integration.Tests.Setup
 
                 using (var scope = sp.CreateScope())
                 {
-                    Thread.Sleep(6000);
+                    Thread.Sleep(10000);
                     using (var appContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
                     {
                         try
