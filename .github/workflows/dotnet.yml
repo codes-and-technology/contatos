@@ -33,7 +33,7 @@ jobs:
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
 
-  test-unitario:
+  test_unitario:
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -49,7 +49,7 @@ jobs:
     - name: Run tests
       run: dotnet test tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj
 
-  test-integracao:
+  test_integracao:
     runs-on: ubuntu-latest
     needs: build
 
