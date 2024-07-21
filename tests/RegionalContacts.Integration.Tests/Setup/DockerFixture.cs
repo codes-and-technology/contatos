@@ -5,7 +5,7 @@ namespace RegionalContacts.Integration.Tests.Setup
 {
     public class DockerFixture : IAsyncLifetime
     {
-        private const string SqlServerImage = "mcr.microsoft.com/mssql/server:2019-latest";
+        private const string SqlServerImage = "mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04";
         private const string RedisImage = "redis:latest";
         private const string SqlServerContainerName = "DB_TESTE";
         private const string RedisContainerName = "REDIS_TESTE";
