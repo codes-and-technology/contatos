@@ -75,7 +75,7 @@ jobs:
           --health-timeout 10s
           --health-retries 5
         ports:
-          - 6380:6379
+          - 10001:6379
 
     steps:
     - name: Checkout repository
