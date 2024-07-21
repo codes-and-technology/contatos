@@ -75,7 +75,7 @@ jobs:
       run: dotnet test tests/RegionalContacts.Integration.Tests/RegionalContacts.Integration.Tests.csproj
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: test-integracao
     steps:
     - name: Checkout repository
