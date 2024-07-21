@@ -33,7 +33,7 @@ jobs:
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
 
-  test_unitario:
+  test-unitario:
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -49,7 +49,7 @@ jobs:
     - name: Run tests
       run: dotnet test tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj
 
-  test_integracao:
+  test-integracao:
     runs-on: ubuntu-latest
     needs: build
 
@@ -97,7 +97,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: test
+    needs: test-integracao
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
