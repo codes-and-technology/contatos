@@ -56,14 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "datasources", "datasources"
 		grafana\provisioning\datasources\prometheus_ds.yml = grafana\provisioning\datasources\prometheus_ds.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegionalContacts.Integration.Tests", "..\RegionalContacts.Integration.Tests\RegionalContacts.Integration.Tests.csproj", "{79F119CF-FA00-46AB-92CE-2448B46BED51}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{4C182661-A7FD-4014-93FE-03A4ACDB4CBC}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{C9AED0A0-CA6C-4C65-A549-5C61C58FF9DA}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegionalContacts.Integration.Tests", "tests\RegionalContacts.Integration.Tests\RegionalContacts.Integration.Tests.csproj", "{35945F88-1314-434B-8B59-D0DF4ED8EA78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,10 +88,10 @@ Global
 		{5C98B70B-000F-4C88-9682-8067030196E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C98B70B-000F-4C88-9682-8067030196E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C98B70B-000F-4C88-9682-8067030196E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79F119CF-FA00-46AB-92CE-2448B46BED51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79F119CF-FA00-46AB-92CE-2448B46BED51}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79F119CF-FA00-46AB-92CE-2448B46BED51}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79F119CF-FA00-46AB-92CE-2448B46BED51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35945F88-1314-434B-8B59-D0DF4ED8EA78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35945F88-1314-434B-8B59-D0DF4ED8EA78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35945F88-1314-434B-8B59-D0DF4ED8EA78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35945F88-1314-434B-8B59-D0DF4ED8EA78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,9 +111,7 @@ Global
 		{DBAFEDB6-05E5-461B-8C23-94FE636E1A5A} = {BE2A747A-69DB-4FC5-9A07-EBED9C9A83F5}
 		{350BEA53-08DC-4796-8228-226777FD1B18} = {DBAFEDB6-05E5-461B-8C23-94FE636E1A5A}
 		{70B5DD3B-9F63-4992-B11A-2D552A75169A} = {DBAFEDB6-05E5-461B-8C23-94FE636E1A5A}
-		{79F119CF-FA00-46AB-92CE-2448B46BED51} = {2B69688C-7364-47DE-9847-E937DA0EFBF7}
-		{4C182661-A7FD-4014-93FE-03A4ACDB4CBC} = {B577C5BD-8E04-4AA7-BEFB-E0DE4FECF84D}
-		{C9AED0A0-CA6C-4C65-A549-5C61C58FF9DA} = {4C182661-A7FD-4014-93FE-03A4ACDB4CBC}
+		{35945F88-1314-434B-8B59-D0DF4ED8EA78} = {2B69688C-7364-47DE-9847-E937DA0EFBF7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {018EFE6B-E9FD-4112-BACD-4F6AD07A8B3C}
