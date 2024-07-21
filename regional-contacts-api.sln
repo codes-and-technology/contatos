@@ -29,7 +29,31 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{B577C5BD-8E04-4AA7-BEFB-E0DE4FECF84D}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
+		docker-compose.override.yml = docker-compose.override.yml
+		docker-compose.yml = docker-compose.yml
 		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", "{61F2B11E-6476-4365-A124-7A7A5BD24168}"
+	ProjectSection(SolutionItems) = preProject
+		prometheus\prometheus.yml = prometheus\prometheus.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grafana", "grafana", "{BE2A747A-69DB-4FC5-9A07-EBED9C9A83F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "provisioning", "provisioning", "{DBAFEDB6-05E5-461B-8C23-94FE636E1A5A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dashboards", "dashboards", "{350BEA53-08DC-4796-8228-226777FD1B18}"
+	ProjectSection(SolutionItems) = preProject
+		grafana\provisioning\dashboards\dashboard.yml = grafana\provisioning\dashboards\dashboard.yml
+		grafana\provisioning\dashboards\RegionalContactsAPIDashboard.json = grafana\provisioning\dashboards\RegionalContactsAPIDashboard.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "datasources", "datasources", "{70B5DD3B-9F63-4992-B11A-2D552A75169A}"
+	ProjectSection(SolutionItems) = preProject
+		grafana\provisioning\datasources\prometheus_ds.yml = grafana\provisioning\datasources\prometheus_ds.yml
 	EndProjectSection
 EndProject
 Global
@@ -76,6 +100,11 @@ Global
 		{BC0FF219-B0E0-4B72-BA2E-384AA74129A8} = {A503A7FB-C416-41C9-8956-0FF450AC3BA8}
 		{83B50DFB-E679-4AA7-AB20-63F34EA1BC81} = {DC0771B2-D3F5-4D41-9B74-8E0D85935426}
 		{636AA09D-1C77-4F75-8EE0-AAB3B91A587B} = {2B69688C-7364-47DE-9847-E937DA0EFBF7}
+		{61F2B11E-6476-4365-A124-7A7A5BD24168} = {B577C5BD-8E04-4AA7-BEFB-E0DE4FECF84D}
+		{BE2A747A-69DB-4FC5-9A07-EBED9C9A83F5} = {B577C5BD-8E04-4AA7-BEFB-E0DE4FECF84D}
+		{DBAFEDB6-05E5-461B-8C23-94FE636E1A5A} = {BE2A747A-69DB-4FC5-9A07-EBED9C9A83F5}
+		{350BEA53-08DC-4796-8228-226777FD1B18} = {DBAFEDB6-05E5-461B-8C23-94FE636E1A5A}
+		{70B5DD3B-9F63-4992-B11A-2D552A75169A} = {DBAFEDB6-05E5-461B-8C23-94FE636E1A5A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {018EFE6B-E9FD-4112-BACD-4F6AD07A8B3C}
