@@ -86,18 +86,21 @@ jobs:
       with:
         dotnet-version: '7.x'
 
-    - name: Install dependencies
-      run: dotnet restore
+    - name: Restore dependencies
+      run: dotnet restore tests/RegionalContacts.Integration.Tests/RegionalContacts.Integration.Tests.csproj
+
+    - name: Build solution
+      run: dotnet build tests/RegionalContacts.Integration.Tests/RegionalContacts.Integration.Tests.csproj --configuration Release --no-restore
 
     - name: Run tests
       env:
         ConnectionStrings__ConnectionString: "Data Source=host.docker.internal,1533;Initial Catalog=Fiap_Fase1_TechChallenge_Contatos;User ID=sa;Password=sql@123456;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False"
         Redis__Port: 17379
-      run: dotnet test tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj
+      run: dotnet test tests/RegionalContacts.Integration.Tests/RegionalContacts.Integration.Tests.csproj
 
   deploy:
     runs-on: ubuntu-latest
-    needs: test
+    needs: test-integracao
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
