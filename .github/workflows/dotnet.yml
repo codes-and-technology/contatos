@@ -87,6 +87,9 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
+    - name: List files
+      run: ls -alh
+
     - name: Build and push Docker Compose images
       run: |
         docker-compose -f ./docker-compose.yml" -f ./docker-compose.override.yml -p dockercompose4048620026943767310 --ansi never build --build-arg
