@@ -84,7 +84,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: '7.x'
+        dotnet-version: '8.x'
 
     - name: Restore dependencies
       run: dotnet restore tests/RegionalContacts.Integration.Tests/RegionalContacts.Integration.Tests.csproj
