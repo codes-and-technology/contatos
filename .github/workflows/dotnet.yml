@@ -24,22 +24,22 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t RegionalContacts.Api:latest -f ./src/auth/Dockerfile .
+        docker build -t regionalcontacts.api:latest -f ./src/RegionalContacts.Api/Dockerfile .
 
     - name: Tag Docker image
       run: |
-        docker tag RegionalContacts.Api:latest ${{ secrets.DOCKER_USERNAME }}/RegionalContacts.Api:latest
+        docker tag regionalcontacts.api:latest ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
 
     - name: Push Docker image
       run: |
-        docker push ${{ secrets.DOCKER_USERNAME }}/RegionalContacts.Api:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
         
     - name: Run tests
       run: dotnet test
 
     - name: Run Docker container
       run: |
-        docker run -d -p 8080:8080 -p 8081:8081 --name auth-app-container ${{ secrets.DOCKER_USERNAME }}/RegionalContacts.Api:latest
+        docker run -d -p 8080:8080 -p 8081:8081 --name regionalcontacts.api ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
 
     - name: Verify Docker container is running
       run: |
