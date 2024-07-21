@@ -71,7 +71,7 @@ jobs:
     - name: Run tests
       env:
         ConnectionStrings__ConnectionString: "Data Source=host.docker.internal,1533;Initial Catalog=Fiap_Fase1_TechChallenge_Contatos;User ID=sa;Password=sql@123456;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False"
-        Redis__Port: 17379
+        Redis__Port: 6380
       run: dotnet test tests/RegionalContacts.Integration.Tests/RegionalContacts.Integration.Tests.csproj
 
   deploy:
