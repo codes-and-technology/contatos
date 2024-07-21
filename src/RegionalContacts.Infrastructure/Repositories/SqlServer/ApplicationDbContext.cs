@@ -2,20 +2,14 @@
 using Microsoft.Extensions.Configuration;
 using RegionalContacts.Domain.Entity;
 
-
 namespace RegionalContacts.Infrastructure.Repositories.SqlServer;
 
 public class ApplicationDbContext : DbContext
 {
     private readonly string _connectionString;
 
-    public ApplicationDbContext()
+    public ApplicationDbContext(IConfiguration configuration)
     {
-        IConfiguration configuration = new ConfigurationBuilder()
-            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json")
-            .Build();
-
         _connectionString = configuration.GetConnectionString("ConnectionString");
     }
 

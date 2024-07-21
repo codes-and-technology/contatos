@@ -8,8 +8,8 @@ namespace RegionalContacts.Infrastructure.Repositories.Redis
     {
         public static void AddRedis(this IServiceCollection services, IConfiguration configuration)
         {
-            string redisHost = configuration["RedisHost"];
-            string redisPort = configuration["RedisPort"];
+            string redisHost = configuration["Redis:Host"];
+            string redisPort = configuration["Redis:Port"];
             string connectionString = $"{redisHost}:{redisPort}";
             services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(connectionString));
 

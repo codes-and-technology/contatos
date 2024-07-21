@@ -56,7 +56,7 @@ namespace RegionalContacts.Api.Controllers
         /// <param name="regionId">ID da região para filtrar os contatos. Opcional.</param>
         /// <returns>Um ActionResult contendo a lista de contatos filtrados pela ID da região. Retorna um Ok com a lista de contatos se a operação for bem-sucedida ou um BadRequest com o erro caso contrário.</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Contact>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<ContactDto>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> Get([FromQuery] short? regionId)
         {
