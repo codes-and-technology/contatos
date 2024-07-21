@@ -47,7 +47,7 @@ namespace RegionalContacts.Integration.Tests.Setup
                     {
                         PortBindings = new Dictionary<string, IList<PortBinding>>
                     {
-                        { "1433/tcp", new List<PortBinding> { new PortBinding { HostPort = "1533" } } }
+                        { "1433/tcp", new List<PortBinding> { new PortBinding { HostPort = "151555" } } }
                     }
                     }
                 });
@@ -76,7 +76,7 @@ namespace RegionalContacts.Integration.Tests.Setup
                     {
                         PortBindings = new Dictionary<string, IList<PortBinding>>
                     {
-                        { "6379/tcp", new List<PortBinding> { new PortBinding { HostPort = "10001" } } }
+                        { "6379/tcp", new List<PortBinding> { new PortBinding { HostPort = "151232" } } }
                     }
                     }
                 });
