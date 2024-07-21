@@ -35,7 +35,7 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
         
     - name: Run tests
-      run: dotnet test
+      run: dotnet test contatos/tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj --no-build --verbosity normal
 
     - name: Run Docker container
       run: |
