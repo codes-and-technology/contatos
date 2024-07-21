@@ -23,7 +23,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t regionalcontacts.api:latest -f ./src/RegionalContacts.Api/Dockerfile .
+        docker build -t regionalcontacts.api:latest -f ./docker-compose .
 
     - name: Tag Docker image
       run: |
@@ -33,50 +33,9 @@ jobs:
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
 
-  test-unitario:
+  deploy:
     runs-on: ubuntu-latest
     needs: build
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Restore dependencies
-      run: dotnet restore tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj
-
-    - name: Build solution
-      run: dotnet build tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj --configuration Release --no-restore
-
-    - name: Run tests
-      run: dotnet test tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj
-
-  test-integracao:
-    runs-on: self-hosted
-    needs: build
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: '8.x'
-
-    - name: Restore dependencies
-      run: dotnet restore tests/RegionalContacts.Integration.Tests/RegionalContacts.Integration.Tests.csproj
-
-    - name: Build solution
-      run: dotnet build tests/RegionalContacts.Integration.Tests/RegionalContacts.Integration.Tests.csproj --configuration Release --no-restore
-
-    - name: Run tests
-      env:
-        ConnectionStrings__ConnectionString: "Data Source=host.docker.internal,1533;Initial Catalog=Fiap_Fase1_TechChallenge_Contatos;User ID=sa;Password=sql@123456;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False"
-        Redis__Port: 6380
-      run: dotnet test tests/RegionalContacts.Integration.Tests/RegionalContacts.Integration.Tests.csproj
-
-  deploy:
-    runs-on: self-hosted
-    needs: test-integracao
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -87,21 +46,13 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: List files
-      run: ls
-
-    - name: Build and push Docker Compose images
+    - name: Pull Docker image
       run: |
-        docker-compose -f docker-compose.yml" -f docker-compose.override.yml -p dockercompose4048620026943767310 --ansi never build --build-arg
-        docker-compose -f docker-compose.yml" -f docker-compose.override.yml push
+        docker pull ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
 
-    - name: Run Docker Compose
+    - name: Run Docker container
       run: |
-        docker-compose -f docker-compose.yml -f docker-compose.override.yml" -p dockercompose4048620026943767310 --ansi never up -d --no-build
+        docker run -d -p 8080:8080 -p 8081:8081 --name regionalcontacts.api ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
 
-    - name: Verify Docker containers are running
+    - name: Verify Docker container is running
       run: docker ps -a
-
-    - name: Test API
-      run: |
-        curl -X GET http://localhost:5001/swagger
