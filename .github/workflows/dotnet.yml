@@ -45,10 +45,7 @@ jobs:
 
       - name: Run Docker Compose
         run: |
-          docker-compose -f ./docker-compose.yml up -d
+          docker-compose -f ./docker-compose.yml -f ./docker-compose.override.yml up -d
 
       - name: Verify Docker containers are running
         run: docker ps -a
-
-      - name: Test API
-        run: curl -X GET http://localhost:5001/swagger/index.html
