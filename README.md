@@ -39,4 +39,3 @@ No Visual Studio, clique em Docker-Compose
 
 
 Isso iniciará todos os serviços necessários para o projeto, incluindo o banco de dados e a aplicação.
-
