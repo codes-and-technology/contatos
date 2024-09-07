@@ -1,4 +1,4 @@
-namespace FDR.Create.Api
+namespace Create.Api
 {
     public class WeatherForecast
     {

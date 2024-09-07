@@ -1,6 +1,0 @@
-@FDR.Create.Api_HostAddress = http://localhost:5101
-
-GET {{FDR.Create.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

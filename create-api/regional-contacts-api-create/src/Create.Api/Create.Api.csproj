@@ -4,18 +4,14 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>2a4b9926-18ae-4b4d-af3e-38d3625ad8b7</UserSecretsId>
+    <UserSecretsId>e28b3b55-60a9-440d-b658-e86c58d17973</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CreateController\CreateController.csproj" />
-    <ProjectReference Include="..\Rabbit.Consumer.Create\Rabbit.Consumer.Create.csproj" />
   </ItemGroup>
 
 </Project>
