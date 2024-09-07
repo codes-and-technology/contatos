@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CreateDto\CreateDto.csproj" />
-    <ProjectReference Include="..\Rabbit.Consumer.Create\Rabbit.Consumer.Create.csproj" />
   </ItemGroup>
 
 </Project>
