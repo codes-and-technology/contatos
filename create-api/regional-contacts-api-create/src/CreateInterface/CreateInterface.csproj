@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CreateDto\CreateDto.csproj" />
+    <ProjectReference Include="..\CreateEntitys\CreateEntitys.csproj" />
+  </ItemGroup>
+
 </Project>
