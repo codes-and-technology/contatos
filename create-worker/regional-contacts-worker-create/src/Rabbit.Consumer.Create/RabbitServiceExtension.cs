@@ -27,7 +27,8 @@ public static class RabbitServiceExtension
 
                 cfg.ReceiveEndpoint("create-contact_error", e =>
                 {
-                    e.Consumer<ContactConsumerDeadLetter>();                   
+                    e.Consumer<ContactConsumerDeadLetter>();
+                    e.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
                 });
 
             });
