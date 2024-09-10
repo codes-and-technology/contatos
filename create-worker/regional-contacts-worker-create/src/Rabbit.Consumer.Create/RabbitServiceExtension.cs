@@ -20,10 +20,19 @@ public static class RabbitServiceExtension
                 // Configura o endpoint de recebimento para a fila específica
                 cfg.ReceiveEndpoint("create-contact", e =>
                 {
-                    e.ConfigureConsumer<ContactConsumer>(context);
+                    e.ConfigureConsumer<ContactConsumer>(context);                    
+                    e.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
+                });                             
 
-                });               
+
+                cfg.ReceiveEndpoint("create-contact_error", e =>
+                {
+                    e.Consumer<ContactConsumerDeadLetter>();                   
+                });
+
             });
+
+          
         });
     }
 }

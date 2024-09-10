@@ -1,27 +1,27 @@
 ﻿using CreateEntitys;
 using CreateInterface;
 using MassTransit;
-using MassTransit.Transports;
+using Microsoft.Extensions.Configuration;
 
 namespace Rabbit.Producer.Create;
 
 public class ContactProducer : IContactProducer
 {
-    private readonly IPublishEndpoint _publisher;
     private readonly ISendEndpointProvider _sendEndpointProvider;
+    private readonly IConfiguration _configuration;
 
-    public ContactProducer(IPublishEndpoint publisher, ISendEndpointProvider sendEndpointProvider)
+    public ContactProducer(ISendEndpointProvider sendEndpointProvider, IConfiguration configuration)
     {
-        _publisher = publisher;
         _sendEndpointProvider = sendEndpointProvider;
-
+        _configuration = configuration;
     }
 
     public async Task SendMessage(ContactEntity entity)
     {
-       await _publisher.Publish<ContactEntity>(entity, context =>
-       {
-           context.Headers.Set("RoutingKey", "create-contact");           
-       });
+        var host = _configuration["Rabbit:Host"];
+        var queue = "create-contact";
+        var sendEndpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri($"rabbitmq://{host}/{queue}"));
+
+        await sendEndpoint.Send(entity);      
     }
 }

@@ -3,7 +3,7 @@ using MassTransit;
 
 namespace Rabbit.Consumer.Create;
 
-public class ContactConsumer : IConsumer<ContactEntity>
+public class ContactConsumerDeadLetter : IConsumer<ContactEntity>
 {
     public async Task Consume(ConsumeContext<ContactEntity> context)
     {
@@ -19,8 +19,9 @@ public class ContactConsumer : IConsumer<ContactEntity>
         }
         catch (Exception)
         {
-
             throw;
         }
     }
+
+   
 }

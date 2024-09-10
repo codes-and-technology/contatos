@@ -19,14 +19,7 @@ public static class RabbitMqServiceExtension
                 });
 
                 cfg.ConfigureEndpoints(context);
-
-                // Configura o envio de mensagens com roteamento apropriado
-                cfg.Send<ContactEntity>(s =>
-                {
-                    s.UseRoutingKeyFormatter(ctx => "create-contact");
-                });
-
-                // Configura a troca para ser durável
+              
                 cfg.ExchangeType = "direct"; // Configura a troca para o tipo `direct`
                 cfg.Durable = true; // Define a troca como durável
 
