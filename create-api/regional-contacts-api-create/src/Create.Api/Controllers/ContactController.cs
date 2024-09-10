@@ -2,39 +2,37 @@
 using CreateInterface;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Create.Api.Controllers
+namespace Create.Api.Controllers;
+
+/// <summary>
+/// Controlador para manipulação de contatos.
+/// </summary>
+[Route("api/[controller]")]
+[ApiController]
+public class ContactController : ControllerBase
 {
-    /// <summary>
-    /// Controlador para manipulação de contatos.
-    /// </summary>
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ContactController : ControllerBase
+    private readonly IController _controller;
+
+    public ContactController(IController controller)
     {
-        private readonly IController _controller;
+        _controller = controller;
+    }
 
-        public ContactController(IController controller)
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] ContactDto contactDto)
+    {
+        try
         {
-            _controller = controller;
-        }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ContactDto contactDto)
+            var result = await _controller.CreateAsync(contactDto);
+            return result.Success ? NoContent() : BadRequest(result);
+        }
+        catch (Exception ex)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                await _controller.CreateAsync(contactDto);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest(ex.Message);
-            }
-            
+            return BadRequest(ex.Message);
         }
+        
     }
 }

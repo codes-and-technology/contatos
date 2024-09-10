@@ -17,6 +17,9 @@
   <ItemGroup>
     <ProjectReference Include="..\CreateController\CreateController.csproj" />
     <ProjectReference Include="..\CreateInterface\CreateInterface.csproj" />
+    <ProjectReference Include="..\External.Interfaces\External.Interfaces.csproj" />
+    <ProjectReference Include="..\ExternalInterfaceGateway\ExternalInterfaceGateway.csproj" />
+    <ProjectReference Include="..\QueueGateway\QueueGateway.csproj" />
     <ProjectReference Include="..\Rabbit.Producer.Create\Rabbit.Producer.Create.csproj" />
   </ItemGroup>
 

@@ -7,22 +7,27 @@ namespace CreateController;
 
 public class CreateContactController : IController
 {
-    public readonly IContactProducer _contactProducer;
+    private readonly IContactQueueGateway _contactQueuGateway;
+    private readonly IContactConsultingGateway _contactConsulting;
 
-    public CreateContactController(IContactProducer contactProducer)
+    public CreateContactController(IContactQueueGateway contactQueuGateway, IContactConsultingGateway contactConsulting)
     {
-        _contactProducer = contactProducer;
+        _contactQueuGateway = contactQueuGateway;
+        _contactConsulting = contactConsulting;
     }
 
     public async Task<ResultDto<ContactEntity>> CreateAsync(ContactDto contactDto)
     {
         var resultDto = new ResultDto<ContactEntity>();
-        var createContactUseCase = new CreateUseCase(contactDto, resultDto);
+        
+        var contactList = await _contactConsulting.Get(contactDto.RegionNumber);
 
+        var createContactUseCase = new CreateUseCase(contactDto, resultDto, contactList);
+       
         var result = createContactUseCase.CreateContact();
 
         if (result.Success)
-            await _contactProducer.SendMessage(result.Data);
+            await _contactQueuGateway.SendMessage(result.Data);
 
         return result;
     }

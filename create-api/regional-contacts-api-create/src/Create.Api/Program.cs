@@ -1,8 +1,10 @@
 using CreateController;
 using CreateInterface;
+using ExternalInterfaceGateway;
 using Microsoft.OpenApi.Models;
+using QueueGateway;
 using Rabbit.Producer.Create;
-
+using External.Interfaces;
 
 internal class Program
 {
@@ -16,23 +18,17 @@ internal class Program
             .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
             .Build();
 
-        // Add services to the container.
 
         builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.AddRabbitMq(configuration);
-
-        builder.Services.AddScoped<IController, CreateContactController>();
-        builder.Services.AddScoped<IContactProducer, ContactProducer>();
+        InstallServices(builder, configuration);
 
         builder.Services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contatos", Version = "v1" });
         });
-
 
         var app = builder.Build();
 
@@ -50,5 +46,16 @@ internal class Program
         app.MapControllers();
 
         app.Run();
+    }
+
+    private static void InstallServices(WebApplicationBuilder builder, IConfigurationRoot? configuration)
+    {
+        builder.Services.AddRabbitMq(configuration);
+        builder.Services.AddRefitServiceExtension(configuration);
+
+        builder.Services.AddScoped<IController, CreateContactController>();
+        builder.Services.AddScoped<IContactProducer, ContactProducer>();
+        builder.Services.AddScoped<IContactQueueGateway, ContactQueueGateway>();
+        builder.Services.AddScoped<IContactConsultingGateway, ContactConsultingGateway>();
     }
 }
