@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ExternalInterfaceGateway\ExternalInterfaceGateway.csproj" />
     <ProjectReference Include="..\UpdateController\UpdateController.csproj" />
     <ProjectReference Include="..\UpdateInterface\UpdateInterface.csproj" />
     <ProjectReference Include="..\Presenters\Presenters.csproj" />

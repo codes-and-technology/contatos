@@ -3,6 +3,8 @@ using UpdateInterface;
 using Microsoft.OpenApi.Models;
 using QueueGateway;
 using Rabbit.Producer.Update;
+using ExternalInterfaceGateway;
+using External.Interfaces;
 
 internal class Program
 {
@@ -49,9 +51,11 @@ internal class Program
     private static void InstallServices(WebApplicationBuilder builder, IConfigurationRoot configuration)
     {
         builder.Services.AddRabbitMq(configuration);
+        builder.Services.AddRefitServiceExtension(configuration);
 
         builder.Services.AddScoped<IController, UpdateContactController>();
         builder.Services.AddScoped<IContactProducer, ContactProducer>();
         builder.Services.AddScoped<IContactQueueGateway, ContactQueueGateway>();
+        builder.Services.AddScoped<IContactConsultingGateway, ContactConsultingGateway>();
     }
 }
