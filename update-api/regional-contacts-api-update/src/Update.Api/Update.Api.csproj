@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>e28b3b55-60a9-440d-b658-e86c58d17973</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UpdateController\UpdateController.csproj" />
+    <ProjectReference Include="..\UpdateInterface\UpdateInterface.csproj" />
+    <ProjectReference Include="..\Presenters\Presenters.csproj" />
+    <ProjectReference Include="..\QueueGateway\QueueGateway.csproj" />
+    <ProjectReference Include="..\Rabbit.Producer.Update\Rabbit.Producer.Update.csproj" />
+  </ItemGroup>
+
+</Project>

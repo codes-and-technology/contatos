@@ -6,13 +6,11 @@ namespace CreateUseCases;
 public class CreateUseCase
 {
     private readonly ContactDto _contactDto;
-    private readonly ResultDto<ContactEntity> _result;
     private readonly IEnumerable<ContactConsultingDto> _contactConsultingDto;
 
-    public CreateUseCase(ContactDto contactDto, ResultDto<ContactEntity> result, IEnumerable<ContactConsultingDto> contactConsultingDto)
+    public CreateUseCase(ContactDto contactDto, IEnumerable<ContactConsultingDto> contactConsultingDto)
     {
-        _contactDto = contactDto;
-        _result = result;
+        _contactDto = contactDto;        
         _contactConsultingDto = contactConsultingDto;
     }
 
@@ -28,13 +26,14 @@ public class CreateUseCase
         }
 
         if (result.Errors.Count > 0)
-            return _result;
+            return result;
 
         return CreateContactEntity();
     }
 
     private ResultDto<ContactEntity> CreateContactEntity()
     {
+        var result = new ResultDto<ContactEntity>();
         var contact = new ContactEntity
         {
             Id = Guid.NewGuid(),
@@ -45,7 +44,7 @@ public class CreateUseCase
             PhoneRegion = new PhoneRegionEntity { RegionNumber = _contactDto.RegionNumber }
         };
 
-        _result.Data = contact;
-        return _result;
+        result.Data = contact;
+        return result;
     }
 }

@@ -18,11 +18,10 @@ public class CreateContactController : IController
 
     public async Task<ResultDto<ContactEntity>> CreateAsync(ContactDto contactDto)
     {
-        var resultDto = new ResultDto<ContactEntity>();
         
         var contactList = await _contactConsulting.Get(contactDto.RegionNumber);
 
-        var createContactUseCase = new CreateUseCase(contactDto, resultDto, contactList);
+        var createContactUseCase = new CreateUseCase(contactDto, contactList);
        
         var result = createContactUseCase.CreateContact();
 
