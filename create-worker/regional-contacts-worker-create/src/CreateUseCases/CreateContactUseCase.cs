@@ -10,6 +10,10 @@ namespace CreateUseCases.UseCase
         {
             var result = new CreateResult<ContactEntity>(entity);
             result.Valid(entity);
+
+            if(entity.PhoneRegion?.Id == Guid.Empty)
+                result.Errors.Add("O DDD deve ser informado");
+
             return result;
         }
     }
