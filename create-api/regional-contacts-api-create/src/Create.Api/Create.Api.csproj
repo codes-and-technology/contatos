@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>e28b3b55-60a9-440d-b658-e86c58d17973</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
@@ -19,6 +19,7 @@
     <ProjectReference Include="..\CreateInterface\CreateInterface.csproj" />
     <ProjectReference Include="..\External.Interfaces\External.Interfaces.csproj" />
     <ProjectReference Include="..\ExternalInterfaceGateway\ExternalInterfaceGateway.csproj" />
+    <ProjectReference Include="..\Presenters\Presenters.csproj" />
     <ProjectReference Include="..\QueueGateway\QueueGateway.csproj" />
     <ProjectReference Include="..\Rabbit.Producer.Create\Rabbit.Producer.Create.csproj" />
   </ItemGroup>

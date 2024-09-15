@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CreateDto;
+namespace Presenters;
 
 public class ContactDto
 {

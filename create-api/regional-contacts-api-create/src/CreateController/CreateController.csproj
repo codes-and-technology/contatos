@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +14,7 @@
     <ProjectReference Include="..\CreateEntitys\CreateEntitys.csproj" />
     <ProjectReference Include="..\CreateInterface\CreateInterface.csproj" />
     <ProjectReference Include="..\CreateUseCases\CreateUseCases.csproj" />
+    <ProjectReference Include="..\Presenters\Presenters.csproj" />
   </ItemGroup>
 
 </Project>

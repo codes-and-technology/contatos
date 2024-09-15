@@ -1,4 +1,4 @@
-﻿namespace CreateDto
+﻿namespace Presenters
 {
     public class ResultDto<T> where T : class
     {

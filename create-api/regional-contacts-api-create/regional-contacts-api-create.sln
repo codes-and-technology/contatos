@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateEntitys", "src\Create
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueGateway", "src\QueueGateway\QueueGateway.csproj", "{27716735-71BF-49FE-B362-56017A736779}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateDto", "src\CreateDto\CreateDto.csproj", "{B80FFF98-E0BF-428C-A850-CFFCFEF4EF63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presenters", "src\Presenters\Presenters.csproj", "{B80FFF98-E0BF-428C-A850-CFFCFEF4EF63}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CA31AD6F-C606-4CE5-B788-4564479ECAC2}"
 EndProject
@@ -35,9 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Create.Api", "src\Create.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rabbit.Producer.Create", "src\Rabbit.Producer.Create\Rabbit.Producer.Create.csproj", "{3690C632-7B67-45A6-AC9C-36E7DF074F4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "External.Interfaces", "src\External.Interfaces\External.Interfaces.csproj", "{3D363832-2509-40EE-A1D0-033FC3F11511}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "External.Interfaces", "src\External.Interfaces\External.Interfaces.csproj", "{3D363832-2509-40EE-A1D0-033FC3F11511}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalInterfaceGateway", "src\ExternalInterfaceGateway\ExternalInterfaceGateway.csproj", "{AB280518-D9F3-4DAA-85C3-B37313A64819}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalInterfaceGateway", "src\ExternalInterfaceGateway\ExternalInterfaceGateway.csproj", "{AB280518-D9F3-4DAA-85C3-B37313A64819}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

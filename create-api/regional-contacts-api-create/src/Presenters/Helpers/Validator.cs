@@ -1,7 +1,6 @@
-﻿using CreateDto;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace CreateDto.Helpers
+namespace Presenters
 {
     public static class Validator
     {

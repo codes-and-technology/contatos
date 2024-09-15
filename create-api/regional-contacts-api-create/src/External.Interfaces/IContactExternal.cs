@@ -1,4 +1,4 @@
-﻿using CreateDto;
+﻿using Presenters;
 using Refit;
 
 namespace External.Interfaces
@@ -6,6 +6,6 @@ namespace External.Interfaces
     public interface IContactExternal
     {
         [Get("/api/Contact")]
-        Task<IApiResponse<IEnumerable<ContactConsultingDto?>>> Get(int regionId);
+        Task<IApiResponse<IEnumerable<ContactConsultingDto>>> Get(int regionId);
     }
 }
