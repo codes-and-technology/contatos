@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateEntitys", "src\Create
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueGateway", "src\QueueGateway\QueueGateway.csproj", "{27716735-71BF-49FE-B362-56017A736779}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateDto", "src\CreateDto\CreateDto.csproj", "{B80FFF98-E0BF-428C-A850-CFFCFEF4EF63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presenters", "src\Presenters\Presenters.csproj", "{B80FFF98-E0BF-428C-A850-CFFCFEF4EF63}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CA31AD6F-C606-4CE5-B788-4564479ECAC2}"
 EndProject
@@ -33,13 +33,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{40637C27
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegionalContactsWorkerCreateTests", "tests\RegionalContactsWorkerCreateTests\RegionalContactsWorkerCreateTests.csproj", "{A74D90D0-17AA-47DB-8980-F325DD2744F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBGateway", "src\DBGateway\DBGateway.csproj", "{D6039289-C7A6-4C98-B998-06FCDAB225A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBGateway", "src\DBGateway\DBGateway.csproj", "{D6039289-C7A6-4C98-B998-06FCDAB225A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Create.Worker", "src\Create.Worker\Create.Worker.csproj", "{453E481A-6C34-48E0-9BC6-60AA9493877C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Create.Worker", "src\Create.Worker\Create.Worker.csproj", "{453E481A-6C34-48E0-9BC6-60AA9493877C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBase", "src\DataBase\DataBase.csproj", "{6EB15EEE-F797-46BC-9147-0E90A6345FCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase", "src\DataBase\DataBase.csproj", "{6EB15EEE-F797-46BC-9147-0E90A6345FCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis", "src\Redis\Redis.csproj", "{580DEBAB-30C3-4E89-AA81-EDADC9F9E068}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Redis", "src\Redis\Redis.csproj", "{580DEBAB-30C3-4E89-AA81-EDADC9F9E068}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CacheGateway", "src\CacheGateway\CacheGateway.csproj", "{F37F3D1E-8E33-4494-9150-1437914AD71B}"
 EndProject

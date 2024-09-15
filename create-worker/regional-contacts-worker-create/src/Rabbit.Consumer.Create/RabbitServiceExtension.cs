@@ -1,38 +1,36 @@
 ﻿using MassTransit;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Rabbit.Consumer.Create;
 
 public static class RabbitServiceExtension
 {
-    public static void AddRabbitMq(this IServiceCollection services)
+    public static void AddRabbitMq(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddMassTransit(x =>
+        var host = configuration["Rabbit:Host"];
+        //var user = configuration["Rabbit:User"];
+        //var password = configuration["Rabbit:Password"];
+
+        services.AddMassTransit(register =>
         {
-            // Registra o consumidor
-            x.AddConsumer<ContactConsumer>();
-
-            // Configura RabbitMQ
-            x.UsingRabbitMq((context, cfg) =>
+            register.AddConsumer<CreateContactConsumer>();
+            register.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host("rabbitmq://localhost"); // URL do RabbitMQ
-
-                // Configura o endpoint de recebimento para a fila específica
-                cfg.ReceiveEndpoint("create-contact", e =>
+                cfg.Host(host);
+                cfg.ReceiveEndpoint("create-contact", receiver =>
                 {
-                    e.ConfigureConsumer<ContactConsumer>(context);                    
-                    e.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
-                });                             
-
-
-                cfg.ReceiveEndpoint("create-contact_error", e =>
-                {
-                    e.Consumer<ContactConsumerDeadLetter>();
-                    e.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
+                    receiver.ConfigureConsumer<CreateContactConsumer>(context);
+                    receiver.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
                 });
 
-            });
 
+                cfg.ReceiveEndpoint("create-contact-error", receiverError =>
+                {
+                    receiverError.Consumer<CreateContactConsumerDeadLetter>();
+                    receiverError.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
+                });
+            });
           
         });
     }
