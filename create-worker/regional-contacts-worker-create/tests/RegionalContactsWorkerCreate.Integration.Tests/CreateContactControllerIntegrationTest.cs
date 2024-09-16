@@ -1,90 +1,19 @@
-using CreateController;
 using CreateEntitys;
-using CreateInterface.Controllers;
 using CreateInterface.DataBase;
-using CreateInterface.UseCase;
-using CreateUseCases.UseCase;
-using DataBase.SqlServer;
-using DataBase.SqlServer.Configurations;
 using MassTransit;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Rabbit.Consumer.Create;
-using Redis;
 using RegionalContactsWorkerCreate.Integration.Tests.Setup;
 
 namespace RegionalContactsWorkerCreate.Integration.Tests
 {
-    public class CreateContactControllerIntegrationTest : IClassFixture<DockerFixture>
+    public class CreateContactControllerIntegrationTest : IClassFixture<CustomWorkerApplicationFixture>, IClassFixture<DockerFixture>
     {
-        private DockerFixture _fixture;
         private readonly IHost _host;
 
-        public CreateContactControllerIntegrationTest(DockerFixture dockerFixture)
+        public CreateContactControllerIntegrationTest(CustomWorkerApplicationFixture hostFixture, DockerFixture dockerFixture)
         {
-            _fixture = dockerFixture;
-
-            // Configura o Host para inicializar o Worker com o ambiente "Testing"
-            _host = Host.CreateDefaultBuilder()
-                .ConfigureAppConfiguration((hostingContext, config) =>
-                {
-                    hostingContext.HostingEnvironment.EnvironmentName = "Testing";
-
-                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                          .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true);
-                })
-                .ConfigureServices((hostContext, services) =>
-                {
-                    var configuration = new ConfigurationBuilder()
-                            .AddJsonFile("appsettings.Testing.json")
-                            .Build();
-
-                    // Configura o banco de dados para testes
-                    services.AddDbContext<ApplicationDbContext>(options =>
-                    {
-                        var connectionString = configuration.GetConnectionString("ConnectionString");
-                        options.UseSqlServer(connectionString, sqlServerOptions =>
-                        {
-                            sqlServerOptions.EnableRetryOnFailure(
-                                maxRetryCount: 5, // número máximo de tentativas
-                                maxRetryDelay: TimeSpan.FromSeconds(10), // atraso máximo entre tentativas
-                                errorNumbersToAdd: null); // códigos de erro adicionais para considerar para retry
-                        });
-                    });
-
-                    services.AddRabbitMq(configuration);
-                    services.AddRedis(configuration);
-
-                    services.AddScoped<IUnitOfWork, UnitOfWork>();
-                    services.AddScoped<IContactRepository, ContactRepository>();
-                    services.AddScoped<IPhoneRegionRepository, PhoneRegionRepository>();
-                    services.AddScoped<ICreateContactController, CreateContactController>();
-                    services.AddScoped<ICreateContactUseCase, CreateContactUseCase>();
-
-                    services.AddMassTransitHostedService();
-
-                    var sp = services.BuildServiceProvider();
-                    using (var scope = sp.CreateScope())
-                    {
-                        Thread.Sleep(10000);
-                        using (var appContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
-                        {
-                            try
-                            {
-                                appContext.Database.EnsureDeleted();
-                                appContext.Database.Migrate();
-                            }
-                            catch (Exception ex)
-                            {
-                                // Log errors or do anything you think it's needed
-                                throw;
-                            }
-                        }
-                    }
-                })
-                .Build();
+            _host = hostFixture.Host;
         }
 
         [Theory]
