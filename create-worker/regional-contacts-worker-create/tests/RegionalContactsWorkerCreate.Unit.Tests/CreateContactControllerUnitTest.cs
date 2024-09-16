@@ -7,7 +7,7 @@ using Redis;
 
 namespace RegionalContactsWorkerCreate.Unit.Tests
 {
-    public class CreateContactControllerTest
+    public class CreateContactControllerUnitTest
     {
         [Theory]
         [InlineData("teste", "1243", 0, "teste")]
