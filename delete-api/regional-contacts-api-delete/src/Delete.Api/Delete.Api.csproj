@@ -15,12 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DeleteController\DeleteController.csproj" />
+    <ProjectReference Include="..\DeleteInterface\DeleteInterface.csproj" />
+    <ProjectReference Include="..\External.Interfaces\External.Interfaces.csproj" />
     <ProjectReference Include="..\ExternalInterfaceGateway\ExternalInterfaceGateway.csproj" />
-    <ProjectReference Include="..\UpdateController\UpdateController.csproj" />
-    <ProjectReference Include="..\UpdateInterface\UpdateInterface.csproj" />
     <ProjectReference Include="..\Presenters\Presenters.csproj" />
     <ProjectReference Include="..\QueueGateway\QueueGateway.csproj" />
-    <ProjectReference Include="..\Rabbit.Producer.Update\Rabbit.Producer.Update.csproj" />
+    <ProjectReference Include="..\Rabbit.Producer.Delete\Rabbit.Producer.Delete.csproj" />
   </ItemGroup>
 
 </Project>

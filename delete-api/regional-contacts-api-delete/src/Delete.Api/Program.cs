@@ -1,10 +1,10 @@
-using UpdateController;
-using UpdateInterface;
+using Controller;
+using DeleteInterface;
 using Microsoft.OpenApi.Models;
 using QueueGateway;
-using Rabbit.Producer.Update;
-using ExternalInterfaceGateway;
+using Rabbit.Producer.Delete;
 using External.Interfaces;
+using ExternalInterfaceGateway;
 
 internal class Program
 {
@@ -53,7 +53,7 @@ internal class Program
         builder.Services.AddRabbitMq(configuration);
         builder.Services.AddRefitServiceExtension(configuration);
 
-        builder.Services.AddScoped<IController, UpdateContactController>();
+        builder.Services.AddScoped<IController, DeleteContactController>();
         builder.Services.AddScoped<IContactProducer, ContactProducer>();
         builder.Services.AddScoped<IContactQueueGateway, ContactQueueGateway>();
         builder.Services.AddScoped<IContactConsultingGateway, ContactConsultingGateway>();

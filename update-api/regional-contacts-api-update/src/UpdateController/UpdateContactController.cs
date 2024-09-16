@@ -8,15 +8,19 @@ namespace UpdateController;
 public class UpdateContactController : IController
 {
     private readonly IContactQueueGateway _contactQueuGateway;
+    private readonly IContactConsultingGateway _contactConsultingGateway;
 
-    public UpdateContactController(IContactQueueGateway contactQueuGateway)
+    public UpdateContactController(IContactQueueGateway contactQueuGateway, IContactConsultingGateway contactConsultingGateway)
     {
         _contactQueuGateway = contactQueuGateway;
+        _contactConsultingGateway = contactConsultingGateway;
     }
 
     public async Task<ResultDto<UpdateContactEntity>> UpdateAsync(Guid id, ContactDto contactDto)
-    {        
-        var updateContactUseCase = new UpdateUseCase(contactDto, id);
+    {
+        var list = await _contactConsultingGateway.Get(contactDto.RegionNumber);
+
+        var updateContactUseCase = new UpdateUseCase(contactDto, id, list);
        
         var result = updateContactUseCase.UpdateContact();
 
