@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DeleteEntitys\DeleteEntitys.csproj" />
+    <ProjectReference Include="..\DeleteInterface\DeleteInterface.csproj" />
+    <ProjectReference Include="..\Presenters\Presenters.csproj" />
+  </ItemGroup>
+
+</Project>
