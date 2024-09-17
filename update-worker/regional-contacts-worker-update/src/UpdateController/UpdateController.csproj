@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UpdateEntitys\UpdateEntitys.csproj" />
+    <ProjectReference Include="..\UpdateInterface\UpdateInterface.csproj" />
+    <ProjectReference Include="..\UpdateUseCases\UpdateUseCases.csproj" />
+  </ItemGroup>
+
+</Project>
