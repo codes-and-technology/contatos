@@ -15,8 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CacheGateways\CacheGateways.csproj" />
     <ProjectReference Include="..\CreateController\CreateController.csproj" />
     <ProjectReference Include="..\DataBase\DataBase.csproj" />
+    <ProjectReference Include="..\DBGateways\DBGateways.csproj" />
+    <ProjectReference Include="..\QueueGateways\QueueGateways.csproj" />
     <ProjectReference Include="..\Rabbit.Consumer.Create\Rabbit.Consumer.Create.csproj" />
     <ProjectReference Include="..\Redis\Redis.csproj" />
   </ItemGroup>

@@ -3,12 +3,11 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CreateDto\Presenters.csproj" />
-    <ProjectReference Include="..\Rabbit.Consumer.Create\Rabbit.Consumer.Create.csproj" />
+    <ProjectReference Include="..\CreateInterface\CreateInterface.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,14 +1,20 @@
-﻿using CreateController;
+﻿using CacheGateways;
+using CreateController;
 using CreateInterface.Controllers;
 using CreateInterface.DataBase;
+using CreateInterface.Gateway.Cache;
+using CreateInterface.Gateway.DB;
+using CreateInterface.Gateway.Queue;
 using CreateInterface.UseCase;
 using CreateUseCases.UseCase;
 using DataBase.SqlServer;
 using DataBase.SqlServer.Configurations;
+using DBGateways;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using QueueGateways;
 using Rabbit.Consumer.Create;
 using Redis;
 
@@ -58,6 +64,10 @@ namespace RegionalContactsWorkerCreate.Integration.Tests.Setup
                         services.AddScoped<IUnitOfWork, UnitOfWork>();
                         services.AddScoped<IContactRepository, ContactRepository>();
                         services.AddScoped<IPhoneRegionRepository, PhoneRegionRepository>();
+                        services.AddScoped<IContactDBGateway, ContactDBGateway>();
+                        services.AddScoped<IPhoneRegionDBGateway, PhoneRegionDBGateway>();
+                        services.AddScoped(typeof(ICacheGateway<>), typeof(CacheGateway<>));
+                        services.AddScoped<ICreateContactGateway, CreateContactGateway>();
                         services.AddScoped<ICreateContactController, CreateContactController>();
                         services.AddScoped<ICreateContactUseCase, CreateContactUseCase>();
 

@@ -1,9 +1,9 @@
 ﻿using CreateController;
 using CreateEntitys;
-using CreateInterface.DataBase;
+using CreateInterface.Gateway.Cache;
+using CreateInterface.Gateway.DB;
 using CreateUseCases.UseCase;
 using Moq;
-using Redis;
 
 namespace RegionalContactsWorkerCreate.Unit.Tests
 {
@@ -16,19 +16,10 @@ namespace RegionalContactsWorkerCreate.Unit.Tests
         [InlineData("teste teste teste teste teste  teste  teste testeteste teste teste teste teste  teste  teste testeteste teste teste teste teste  teste  teste testeteste teste teste teste teste  teste  teste testeteste teste teste teste teste  teste  teste testeteste teste teste teste teste  teste  teste testeteste teste teste teste teste  teste  teste teste", "988027555", 13, "")]
         public async Task When_AddAsync_ShouldBe_Error(string email, string phone, short region, string name)
         {
-            var cache = new Mock<IRedisCache<ContactEntity>>();
+            var cache = new Mock<ICacheGateway<ContactEntity>>();
             cache.Setup(s => s.SaveCacheAsync(It.IsAny<string>(), It.IsAny<List<ContactEntity>>())).Verifiable();
             cache.Setup(s => s.GetCacheAsync(It.IsAny<string>())).ReturnsAsync(new List<ContactEntity>());
             cache.Setup(s => s.ClearCacheAsync(It.IsAny<string>())).Verifiable();
-
-            var phoneRegionRepositoryMock = new Mock<IPhoneRegionRepository>();
-            phoneRegionRepositoryMock.Setup(s => s.GetByRegionNumberAsync(It.IsAny<short>())).ReturnsAsync(new PhoneRegionEntity());
-
-            var unitOfWorkMock = new Mock<IUnitOfWork>();
-            unitOfWorkMock.Setup(s => s.PhoneRegions).Returns(phoneRegionRepositoryMock.Object);
-
-            var useCase = new CreateContactUseCase();
-            CreateContactController controller = new(unitOfWorkMock.Object, useCase, cache.Object);
 
             var entity = new ContactEntity
             {
@@ -44,6 +35,16 @@ namespace RegionalContactsWorkerCreate.Unit.Tests
                     RegionNumber = region
                 }
             };
+
+            var contactDBGatewayMock = new Mock<IContactDBGateway>();
+            contactDBGatewayMock.Setup(s => s.AddAsync(entity)).Verifiable();
+
+            var phoneRegionDBGatewayMock = new Mock<IPhoneRegionDBGateway>();
+            phoneRegionDBGatewayMock.Setup(s => s.AddAsync(entity.PhoneRegion)).Verifiable();
+            phoneRegionDBGatewayMock.Setup(s => s.GetByRegionNumberAsync(It.IsAny<short>())).ReturnsAsync(new PhoneRegionEntity());
+
+            var useCase = new CreateContactUseCase();
+            CreateContactController controller = new(contactDBGatewayMock.Object, phoneRegionDBGatewayMock.Object, useCase, cache.Object);
 
             var result = await controller.CreateAsync(entity);
             Assert.True(result.Errors.Count > 0);
@@ -53,25 +54,10 @@ namespace RegionalContactsWorkerCreate.Unit.Tests
         [InlineData("teste@gmail.com", "988027777", 11, "Usuário Teste")]
         public async Task When_AddAsync_ShouldBe_Ok(string email, string phone, short region, string name)
         {
-            var cache = new Mock<IRedisCache<ContactEntity>>();
-            cache.Setup(s => s.SaveCacheAsync(It.IsAny<string>(), It.IsAny<List<ContactEntity>>()));
+            var cache = new Mock<ICacheGateway<ContactEntity>>();
+            cache.Setup(s => s.SaveCacheAsync(It.IsAny<string>(), It.IsAny<List<ContactEntity>>())).Verifiable();
             cache.Setup(s => s.GetCacheAsync(It.IsAny<string>())).ReturnsAsync(new List<ContactEntity>());
             cache.Setup(s => s.ClearCacheAsync(It.IsAny<string>())).Verifiable();
-
-            var phoneRegionRepositoryMock = new Mock<IPhoneRegionRepository>();
-            phoneRegionRepositoryMock.Setup(s => s.GetByRegionNumberAsync(It.IsAny<short>())).ReturnsAsync(new PhoneRegionEntity());
-
-            var contactRepositoryMock = new Mock<IContactRepository>();
-            contactRepositoryMock.Setup(s => s.AddAsync(It.IsAny<ContactEntity>())).Verifiable();
-
-            var unitOfWorkMock = new Mock<IUnitOfWork>();
-            unitOfWorkMock.Setup(s => s.Contacts).Returns(contactRepositoryMock.Object);
-            unitOfWorkMock.Setup(s => s.PhoneRegions).Returns(phoneRegionRepositoryMock.Object);
-
-            var useCase = new CreateContactUseCase();
-            CreateContactController controller = new(unitOfWorkMock.Object, useCase, cache.Object);
-
-            unitOfWorkMock.Setup(s => s.PhoneRegions.GetByRegionNumberAsync(It.IsAny<short>())).ReturnsAsync(null as PhoneRegionEntity);
 
             var entity = new ContactEntity
             {
@@ -87,6 +73,16 @@ namespace RegionalContactsWorkerCreate.Unit.Tests
                     RegionNumber = region
                 }
             };
+
+            var contactDBGatewayMock = new Mock<IContactDBGateway>();
+            contactDBGatewayMock.Setup(s => s.AddAsync(entity)).Verifiable();
+
+            var phoneRegionDBGatewayMock = new Mock<IPhoneRegionDBGateway>();
+            phoneRegionDBGatewayMock.Setup(s => s.AddAsync(entity.PhoneRegion)).Verifiable();
+            phoneRegionDBGatewayMock.Setup(s => s.GetByRegionNumberAsync(It.IsAny<short>())).ReturnsAsync(new PhoneRegionEntity());
+
+            var useCase = new CreateContactUseCase();
+            CreateContactController controller = new(contactDBGatewayMock.Object, phoneRegionDBGatewayMock.Object, useCase, cache.Object);
 
             var result = await controller.CreateAsync(entity);
             Assert.True(result.Success);

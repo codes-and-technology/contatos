@@ -1,12 +1,18 @@
+using CacheGateways;
 using Create.Worker;
 using CreateController;
 using CreateInterface.Controllers;
 using CreateInterface.DataBase;
+using CreateInterface.Gateway.Cache;
+using CreateInterface.Gateway.DB;
+using CreateInterface.Gateway.Queue;
 using CreateInterface.UseCase;
 using CreateUseCases.UseCase;
 using DataBase.SqlServer;
 using DataBase.SqlServer.Configurations;
+using DBGateways;
 using Microsoft.EntityFrameworkCore;
+using QueueGateways;
 using Rabbit.Consumer.Create;
 using Redis;
 
@@ -28,6 +34,10 @@ internal class Program
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         builder.Services.AddScoped<IContactRepository, ContactRepository>();
         builder.Services.AddScoped<IPhoneRegionRepository, PhoneRegionRepository>();
+        builder.Services.AddScoped<IContactDBGateway, ContactDBGateway>();
+        builder.Services.AddScoped<IPhoneRegionDBGateway, PhoneRegionDBGateway>();
+        builder.Services.AddScoped(typeof(ICacheGateway<>), typeof(CacheGateway<>));
+        builder.Services.AddScoped<ICreateContactGateway, CreateContactGateway>();
         builder.Services.AddScoped<ICreateContactController, CreateContactController>();
         builder.Services.AddScoped<ICreateContactUseCase, CreateContactUseCase>();
 

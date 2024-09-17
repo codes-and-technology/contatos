@@ -1,5 +1,5 @@
 using CreateEntitys;
-using CreateInterface.DataBase;
+using CreateInterface.Gateway.DB;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,11 +42,11 @@ namespace RegionalContactsWorkerCreate.Integration.Tests
             // Simular um tempo de processamento e parar o host
             await Task.Delay(10000); // Esperar o Worker processar a mensagem
 
-            var contactRepository = _host.Services.GetRequiredService<IContactRepository>();
-            var regionNumberRepository = _host.Services.GetRequiredService<IPhoneRegionRepository>();
+            var contactDBGateway = _host.Services.GetRequiredService<IContactDBGateway>();
+            var phoneRegionDBGateway = _host.Services.GetRequiredService<IPhoneRegionDBGateway>();
 
-            var insertedContact = await contactRepository.FindByIdAsync(contactToInsert.Id);
-            insertedContact.PhoneRegion = await regionNumberRepository.GetByRegionNumberAsync(contactToInsert.PhoneRegion.RegionNumber);
+            var insertedContact = await contactDBGateway.FindByIdAsync(contactToInsert.Id);
+            insertedContact.PhoneRegion = await phoneRegionDBGateway.GetByRegionNumberAsync(contactToInsert.PhoneRegion.RegionNumber);
 
             await _host.StopAsync();
 

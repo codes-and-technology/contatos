@@ -10,7 +10,6 @@
     <ProjectReference Include="..\CreateEntitys\CreateEntitys.csproj" />
     <ProjectReference Include="..\CreateInterface\CreateInterface.csproj" />
     <ProjectReference Include="..\CreateUseCases\CreateUseCases.csproj" />
-    <ProjectReference Include="..\Redis\Redis.csproj" />
   </ItemGroup>
 
 </Project>
