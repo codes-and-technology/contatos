@@ -33,6 +33,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\src\CacheGateways\CacheGateways.csproj" />
+		<ProjectReference Include="..\..\src\QueueGateways\QueueGateways.csproj" />
 		<ProjectReference Include="..\..\src\Update.Worker\Update.Worker.csproj" />
 		<ProjectReference Include="..\..\src\UpdateController\UpdateController.csproj" />
 		<ProjectReference Include="..\..\src\DataBase\DataBase.csproj" />

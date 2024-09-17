@@ -1,17 +1,17 @@
 ﻿using MassTransit;
 using UpdateEntitys;
-using UpdateInterface.Controllers;
+using UpdateInterface.Gateway.Queue;
 
 namespace Rabbit.Consumer.Update;
 
-public class UpdateContactConsumer(IUpdateContactController updateContactController) : IConsumer<ContactEntity>
+public class UpdateContactConsumer(IUpdateContactGateway updateContactGateway) : IConsumer<ContactEntity>
 {
-    private readonly IUpdateContactController _updateContactController = updateContactController;
+    private readonly IUpdateContactGateway _updateContactGateway = updateContactGateway;
 
     public async Task Consume(ConsumeContext<ContactEntity> context)
     {
         var message = context.Message;
         Console.WriteLine($"Received message: {message}");
-        var result = await _updateContactController.UpdateAsync(message);
+        var result = await _updateContactGateway.UpdateAsync(message);
     }
 }

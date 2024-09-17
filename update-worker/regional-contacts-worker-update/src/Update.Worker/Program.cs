@@ -3,6 +3,7 @@ using DataBase.SqlServer;
 using DataBase.SqlServer.Configurations;
 using DBGateways;
 using Microsoft.EntityFrameworkCore;
+using QueueGateways;
 using Rabbit.Consumer.Update;
 using Redis;
 using Update.Worker;
@@ -11,6 +12,7 @@ using UpdateInterface.Controllers;
 using UpdateInterface.DataBase;
 using UpdateInterface.Gateway.Cache;
 using UpdateInterface.Gateway.DB;
+using UpdateInterface.Gateway.Queue;
 using UpdateInterface.UseCase;
 using UpdateUseCases.UseCase;
 
@@ -35,6 +37,7 @@ internal class Program
         builder.Services.AddScoped<IContactDBGateway, ContactDBGateway>();
         builder.Services.AddScoped<IPhoneRegionDBGateway, PhoneRegionDBGateway>();
         builder.Services.AddScoped(typeof(ICacheGateway<>), typeof(CacheGateway<>));
+        builder.Services.AddScoped<IUpdateContactGateway, UpdateContactGateway>();
         builder.Services.AddScoped<IUpdateContactController, UpdateContactController>();
         builder.Services.AddScoped<IUpdateContactUseCase, UpdateContactUseCase>();
 

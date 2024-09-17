@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using QueueGateways;
 using Rabbit.Consumer.Update;
 using Redis;
 using UpdateController;
@@ -13,6 +14,7 @@ using UpdateInterface.Controllers;
 using UpdateInterface.DataBase;
 using UpdateInterface.Gateway.Cache;
 using UpdateInterface.Gateway.DB;
+using UpdateInterface.Gateway.Queue;
 using UpdateInterface.UseCase;
 using UpdateUseCases.UseCase;
 
@@ -65,6 +67,7 @@ namespace RegionalContactsWorkerUpdate.Integration.Tests.Setup
                         services.AddScoped<IContactDBGateway, ContactDBGateway>();
                         services.AddScoped<IPhoneRegionDBGateway, PhoneRegionDBGateway>();
                         services.AddScoped(typeof(ICacheGateway<>), typeof(CacheGateway<>));
+                        services.AddScoped<IUpdateContactGateway, UpdateContactGateway>();
                         services.AddScoped<IUpdateContactController, UpdateContactController>();
                         services.AddScoped<IUpdateContactUseCase, UpdateContactUseCase>();
 

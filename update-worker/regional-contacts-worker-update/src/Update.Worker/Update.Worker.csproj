@@ -15,8 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CacheGateway\CacheGateways.csproj" />
-    <ProjectReference Include="..\DBGateway\DBGateways.csproj" />
+    <ProjectReference Include="..\CacheGateways\CacheGateways.csproj" />
+    <ProjectReference Include="..\DBGateways\DBGateways.csproj" />
+    <ProjectReference Include="..\QueueGateways\QueueGateways.csproj" />
     <ProjectReference Include="..\UpdateController\UpdateController.csproj" />
     <ProjectReference Include="..\DataBase\DataBase.csproj" />
     <ProjectReference Include="..\Rabbit.Consumer.Update\Rabbit.Consumer.Update.csproj" />
