@@ -5,23 +5,21 @@ namespace ConsultingUseCases.UseCase
 {
     public class ConsultingContactUseCase
     {
-        private List<ContactEntity> _list;
         private readonly short? _regionId;
 
-        public ConsultingContactUseCase(List<ContactEntity> list, short? regionId)
+        public ConsultingContactUseCase(short? regionId)
         {
-            _list = list;
             _regionId = regionId;
         }
 
-        public List<ContactDto> CreateConsulting()
+        public List<ContactDto> CreateConsultingFromDb(List<ContactEntity> listDb)
         {
             var list = new List<ContactDto>();
 
             if (_regionId.HasValue)
-                _list = _list.Where(w => w.PhoneRegion != null && w.PhoneRegion.RegionNumber == _regionId.Value).ToList();
+                listDb = listDb.Where(w => w.PhoneRegion != null && w.PhoneRegion.RegionNumber == _regionId.Value).ToList();
 
-            foreach (var item in _list)
+            foreach (var item in listDb)
             {
                 list.Add(new ContactDto
                 {
@@ -34,6 +32,14 @@ namespace ConsultingUseCases.UseCase
             }
 
             return list;
+        }
+
+        public List<ContactDto> CreateConsultingFromCache(List<ContactDto> listFromCache)
+        {
+            if (_regionId.HasValue)
+                listFromCache = listFromCache.Where(w => w.RegionNumber == _regionId.Value).ToList();
+
+            return listFromCache;
         }
     }
 }

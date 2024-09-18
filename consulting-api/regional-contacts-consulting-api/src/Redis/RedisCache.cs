@@ -27,6 +27,11 @@ namespace Redis
             }
         }
 
+        public async Task SaveCacheAsync(string key, List<T> list)
+        {
+            await _cache.StringSetAsync(key, Serialize(list), TimeSpan.FromMinutes(10));
+        }
+
         private byte[] Serialize<T>(T obj)
         {
             var json = JsonSerializer.Serialize(obj);

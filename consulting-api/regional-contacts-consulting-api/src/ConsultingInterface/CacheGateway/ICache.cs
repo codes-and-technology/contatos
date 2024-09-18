@@ -1,8 +1,11 @@
 ﻿using ConsultingEntitys;
+using Presenters;
 
 namespace ConsultingInterface.CacheGateway;
 
 public interface ICache
 {
-    Task<List<ContactEntity>> GetCacheAsync(string key);
+    Task<List<ContactDto>> GetCacheAsync(string key);
+    Task SaveCacheAsync(string key, List<ContactDto> list);
+
 }

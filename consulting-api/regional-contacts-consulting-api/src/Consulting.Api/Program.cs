@@ -11,7 +11,7 @@ using Microsoft.OpenApi.Models;
 using Redis;
 using System.Text.Json.Serialization;
 
-internal class Program
+public class Program
 {
     private static void Main(string[] args)
     {

@@ -16,22 +16,28 @@ namespace ConsultingController
         {
             ConsultingResult<IEnumerable<ContactEntity>> result = new();
             var contactsCache = await _cacheGateway.GetCacheAsync("Contacts");
+            ConsultingContactUseCase useCase = new(regionId);
 
             List<ContactEntity> list = [];
 
-            if (contactsCache.Count > 0)
+            if (contactsCache is not null && contactsCache.Count > 0)
             {
-                list = contactsCache;
-            }
-            else
-            {
-                var dbList = await _dbGateway.GetAllAsync();
-                list = dbList.ToList();
+                return useCase.CreateConsultingFromCache(contactsCache);
             }
 
-            ConsultingContactUseCase useCase = new(list, regionId);
+            var dbList = await _dbGateway.GetAllAsync();
+            list = dbList.ToList();
 
-            return useCase.CreateConsulting();
+            await _cacheGateway.SaveCacheAsync("Contacts", list.Select(f => new ContactDto
+            {
+                Id = f.Id.ToString(),
+                Email = f.Email,
+                Name = f.Name,
+                PhoneNumber = f.PhoneNumber,
+                RegionNumber = f.PhoneRegion.RegionNumber
+            }).ToList());
+
+            return useCase.CreateConsultingFromDb(list);
         }
     }
 }
