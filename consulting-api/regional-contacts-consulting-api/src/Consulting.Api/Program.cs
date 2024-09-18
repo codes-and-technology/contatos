@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Redis;
 using System.Text.Json.Serialization;
+using Prometheus;
 
 public class Program
 {
@@ -29,6 +30,7 @@ public class Program
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contatos", Version = "v1" });
         });
+        builder.Services.UseHttpClientMetrics();
 
         var app = builder.Build();
 
@@ -39,10 +41,16 @@ public class Program
             app.UseSwaggerUI();
         }
 
+        /* INICIO DA CONFIGURAÇÃO - PROMETHEUS */
+        app.UseMetricServer();
+        app.UseHttpMetrics(options =>
+        {
+            options.AddCustomLabel("host", context => context.Request.Host.Host);
+        });
+        /* FIM DA CONFIGURAÇÃO - PROMETHEUS */
+
         app.UseHttpsRedirection();
-
         app.UseAuthorization();
-
         app.MapControllers();
 
         app.Run();
