@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Presenters;
 using StackExchange.Redis;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -70,16 +71,15 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
                         throw;
                     }
                 }
-                var list = new List<ContactEntity>
+                var list = new List<ContactDto>
                 {
-                    new ContactEntity
+                    new ContactDto
                     {
-                        CreatedDate = DateTime.Now,
                         Email = "teste@teste.com",
-                        Id = Guid.NewGuid(),
+                        Id = Guid.NewGuid().ToString(),
                         Name = "Teste",
                         PhoneNumber = "4123412",
-                        PhoneRegion = new PhoneRegionEntity { RegionNumber = 15, CreatedDate = DateTime.Now, Id = Guid.NewGuid() }
+                        RegionNumber = 13
                     }
                 };
                 var conn = scope.ServiceProvider.GetRequiredService<IConnectionMultiplexer>();
