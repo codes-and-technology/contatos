@@ -25,8 +25,7 @@ public class ContactsControllerTests : IClassFixture<CustomWebApplicationFactory
         var contactDto = new ContactDto { Email = "teste@teste.com", Name = "Teste de usuário", PhoneNumber = "988027555", RegionNumber = 11 };
         var response = await _client.PostAsJsonAsync("/api/contact", contactDto);
 
-       var message = await response.Content.ReadAsStringAsync();
-        Assert.NotNull(response);
+        Assert.True(response.IsSuccessStatusCode);
      
     }
 }
