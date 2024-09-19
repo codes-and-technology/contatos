@@ -11,7 +11,7 @@ public static class RefitServiceExtension
         services.AddRefitClient<IContactExternal>().ConfigureHttpClient(c =>
         {
             c.BaseAddress = new Uri(configuration["ContactConsulting:Uri"]);
-            c.Timeout = TimeSpan.FromSeconds(1);
+            c.Timeout = TimeSpan.FromSeconds(10);
         });        
     }
 }

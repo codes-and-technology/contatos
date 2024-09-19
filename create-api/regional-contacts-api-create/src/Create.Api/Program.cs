@@ -5,8 +5,9 @@ using Microsoft.OpenApi.Models;
 using QueueGateway;
 using Rabbit.Producer.Create;
 using External.Interfaces;
+using Prometheus;
 
-internal class Program
+public class Program
 {
     private static void Main(string[] args)
     {
@@ -30,6 +31,8 @@ internal class Program
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contatos", Version = "v1" });
         });
 
+        builder.Services.UseHttpClientMetrics();
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -39,10 +42,16 @@ internal class Program
             app.UseSwaggerUI();
         }
 
+        /* INICIO DA CONFIGURAÇÃO - PROMETHEUS */
+        app.UseMetricServer();
+        app.UseHttpMetrics(options =>
+        {
+            options.AddCustomLabel("host", context => context.Request.Host.Host);
+        });
+        /* FIM DA CONFIGURAÇÃO - PROMETHEUS */
+
         app.UseHttpsRedirection();
-
         app.UseAuthorization();
-
         app.MapControllers();
 
         app.Run();
