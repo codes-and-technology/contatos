@@ -23,7 +23,7 @@ public class DeleteUseCase
             return result;
         }
 
-        if (!_contactList.Any(a => a.Id.Equals(_id.ToString())))
+        if (!_contactList.Any(a => a.Id.Equals(_id.ToString(), StringComparison.InvariantCulture)))
         {
             result.Errors.Add("Contato não encontrado");
             return result;

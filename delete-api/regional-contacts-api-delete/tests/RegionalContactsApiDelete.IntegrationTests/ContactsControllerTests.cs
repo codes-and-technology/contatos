@@ -1,10 +1,9 @@
-﻿using CreateEntitys;
-using Presenters;
-using RegionalContactsApiCreate.Integration.Tests.Setup;
+﻿using Presenters;
+using RegionalContactsApiDelete.IntegrationTests.Setup;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace RegionalContactsApiCreateTests;
+namespace RegionalContactsApiDelete.IntegrationTests;
 
 public class ContactsControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>, IClassFixture<DockerFixture>
 {
@@ -16,29 +15,29 @@ public class ContactsControllerTests : IClassFixture<CustomWebApplicationFactory
     {
         _factory = factory;
         _client = factory.CreateClient();
-     
+
     }
     [Fact]
-    public async Task PostContacts_ReturnsSuccessStatusCode()
+    public async Task DeleteContact_ReturnsSuccessStatusCode()
     {
+        var id = "93801677-b494-4a82-98a9-444e9fa1250e";
+
         _apiServer.Start();
         _apiServer.SearchContact();
-        var contactDto = new ContactDto { Email = "teste@teste.com", Name = "Teste de usuário", PhoneNumber = "966627555", RegionNumber = 11 };
-        var response = await _client.PostAsJsonAsync("/api/contact", contactDto);
+        var response = await _client.DeleteAsync($"/api/contact/{id}");
 
         _apiServer.Dispose();
-        Assert.True(response.IsSuccessStatusCode);            
+        Assert.True(response.IsSuccessStatusCode);
     }
 
 
     [Fact]
-    public async Task PostContacts_ReturnsErrorWithContactAlreadyExists()
+    public async Task DeleteContacts_ReturnErrorWithContactNotExists()
     {
         _apiServer.Start();
         _apiServer.SearchContact();
-
-        var contactDto = new ContactDto { Email = "teste@teste.com", Name = "Teste de usuário", PhoneNumber = "988888888", RegionNumber = 11 };
-        var response = await _client.PostAsJsonAsync("/api/contact", contactDto);
+        var id = "682e2f01-9cf9-453e-b3f2-c1e8e0bfd149";
+        var response = await _client.DeleteAsync($"/api/contact/{id}");
         _apiServer.Dispose();
 
         var resultString = await response.Content.ReadAsStringAsync();
@@ -47,9 +46,9 @@ public class ContactsControllerTests : IClassFixture<CustomWebApplicationFactory
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
-        var result = JsonSerializer.Deserialize<ResultDto<ContactEntity>>(resultString, options);
+        var result = JsonSerializer.Deserialize<ResultDto<ContactConsultingDto>>(resultString, options);
 
-        Assert.True(result.Errors.Count() > 0); 
+        Assert.True(result.Errors.Count() > 0);
 
-    }    
+    }
 }

@@ -1,13 +1,13 @@
-﻿using Docker.DotNet;
-using Docker.DotNet.Models;
+﻿using Docker.DotNet.Models;
+using Docker.DotNet;
 using System.Diagnostics;
 
-namespace RegionalContactsApiCreate.Integration.Tests.Setup;
+namespace RegionalContactsApiDelete.IntegrationTests.Setup;
 
 public class DockerFixture : IAsyncLifetime
 {
     private const string RABBITMQ_IMAGE = "rabbitmq:3-management";
-    private const string RABBITMQ_CONTAINER_NAME = "RABBITMQ_TESTE";
+    private const string RABBITMQ_CONTAINER_NAME = "RABBITMQ_TESTE_DELETE";
 
     private readonly DockerClient _dockerClient;
     public string RabbitMQContainerId { get; private set; }
@@ -33,9 +33,6 @@ public class DockerFixture : IAsyncLifetime
         // Defina as portas customizadas para os testes
         int amqpTestPort = 5673;
         int managementTestPort = 15673;
-
-  //      await _dockerClient.Images.CreateImageAsync(new ImagesCreateParameters { FromImage = "rabbitmq" }, new AuthConfig(), new Progress())
-  //.ConfigureAwait(false);
 
         // Cria o container RabbitMQ com as portas modificadas
         var createResponse = await _dockerClient.Containers.CreateContainerAsync(new CreateContainerParameters

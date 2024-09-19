@@ -4,8 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace RegionalContactsApiCreate.Integration.Tests.Setup;
-
+namespace RegionalContactsApiDelete.IntegrationTests.Setup;
 public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -23,8 +22,8 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
         {
             var configuration = new ConfigurationBuilder()
                         .AddJsonFile("appsettings.Testing.json")
-                        .Build();         
-            var sp = services.BuildServiceProvider();          
+                        .Build();
+            var sp = services.BuildServiceProvider();
         });
     }
 
@@ -35,4 +34,3 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
         return base.CreateHost(builder);
     }
 }
-

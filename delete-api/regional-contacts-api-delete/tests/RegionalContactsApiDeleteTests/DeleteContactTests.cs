@@ -34,7 +34,7 @@ namespace RegionalContactsApiDeleteTests
             {
                new ContactConsultingDto
                {
-                   Id = id.ToString(),
+                   Id = Guid.NewGuid().ToString(),
                    Email = "teste@teste.com",
                    Name = "Usuario Teste",
                    PhoneNumber = "988027555",

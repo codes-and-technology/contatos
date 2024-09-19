@@ -4,7 +4,7 @@ using WireMock.ResponseBuilders;
 using WireMock.Server;
 using WireMock.Settings;
 
-namespace RegionalContactsApiCreate.Integration.Tests.Setup;
+namespace RegionalContactsApiDelete.IntegrationTests.Setup;
 
 public class ConsultingApiServer : IDisposable
 {
@@ -24,23 +24,22 @@ public class ConsultingApiServer : IDisposable
             new ContactConsultingDto
             {
                 Email = "teste@tste.com",
-                Id = Guid.NewGuid().ToString(),
+                Id = "93801677-b494-4a82-98a9-444e9fa1250e",
                 Name = "teste",
                 PhoneNumber = "988888888",
                 RegionNumber = 11
-            }
+            },           
         };
-        
+
         _server.Given(Request.Create()
           .WithPath("/api/Contact")
-          .WithParam("regionId", "11")
-          .UsingGet())           
+          .UsingGet())
           .RespondWith(Response.Create()
           .WithHeader("content-type", "application/json")
           .WithBodyAsJson(list)
           .WithStatusCode(System.Net.HttpStatusCode.OK));
     }
-   
+
     public void Dispose()
     {
         _server.Stop();
