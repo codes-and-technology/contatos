@@ -11,12 +11,13 @@ public static class RabbitMqServiceExtension
         var host = configuration["Rabbit:Host"];
         var user = configuration["Rabbit:User"];
         var password = configuration["Rabbit:Password"];
+        ushort port = Convert.ToUInt16(configuration["Rabbit:Port"]);
 
         services.AddMassTransit(x =>
         {
             x.UsingRabbitMq((context, cfg) =>
             {                
-                cfg.Host($"{host}", "/", h => {
+                cfg.Host(host,port, "/", h => {
                     h.Username(user);
                     h.Password(password);
                 });

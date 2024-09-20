@@ -6,7 +6,7 @@ using Rabbit.Producer.Update;
 using ExternalInterfaceGateway;
 using External.Interfaces;
 
-internal class Program
+public class Program
 {
     private static void Main(string[] args)
     {
