@@ -19,7 +19,7 @@ public static class RabbitServiceExtension
 
             register.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host("localhost", port, "/", h =>
+                cfg.Host(host, port, "/", h =>
                 {
                     
                     h.Username(user);
