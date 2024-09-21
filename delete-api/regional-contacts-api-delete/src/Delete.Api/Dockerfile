@@ -9,11 +9,24 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/Delete.Api/Delete.Api.csproj", "src/Delete.Api/"]
+
+COPY ["/delete-api/regional-contacts-api-delete/src/Delete.Api/Delete.Api.csproj", "src/Delete.Api/"]
+COPY ["/delete-api/regional-contacts-api-delete/src/DeleteController/DeleteController.csproj", "src/DeleteController/"]
+COPY ["/delete-api/regional-contacts-api-delete/src/DeleteEntitys/DeleteEntitys.csproj", "src/DeleteEntitys/"]
+COPY ["/delete-api/regional-contacts-api-delete/src/DeleteInterface/DeleteInterface.csproj", "src/DeleteInterface/"]
+COPY ["/delete-api/regional-contacts-api-delete/src/DeleteUseCases/DeleteUseCases.csproj", "src/DeleteUseCases/"]
+COPY ["/delete-api/regional-contacts-api-delete/src/External.Interfaces/External.Interfaces.csproj", "src/External.Interfaces/"]
+COPY ["/delete-api/regional-contacts-api-delete/src/ExternalInterfaceGateway/ExternalInterfaceGateway.csproj", "src/ExternalInterfaceGateway/"]
+COPY ["/delete-api/regional-contacts-api-delete/src/Presenters/Presenters.csproj", "src/Presenters/"]
+COPY ["/delete-api/regional-contacts-api-delete/src/QueueGateway/QueueGateway.csproj", "src/QueueGateway/"]
+COPY ["/delete-api/regional-contacts-api-delete/src/Rabbit.Producer.Delete/Rabbit.Producer.Delete.csproj", "src/Rabbit.Producer.Delete/"]
+
 RUN dotnet restore "./src/Delete.Api/Delete.Api.csproj"
-COPY . .
+
+COPY ["/delete-api/regional-contacts-api-delete", "/src"]
+
 WORKDIR "/src/src/Delete.Api"
-RUN dotnet build "./Delete.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "Delete.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release

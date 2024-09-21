@@ -1,6 +1,19 @@
- version: '3.4'
-
  services:
+   rabbitmq:
+     image: rabbitmq:3-management
+     container_name: rabbitmq_management    
+     ports: 
+      - 5673:5673 # (erlang) communication between the nodes and CLI tool
+      - 15672:15672 # communication with the web management API 
+    
+     volumes:
+     - C:\dados\volumes\sqlserver\Fiap_Fase1_TechChallenge_Contatos:/var/lib/rabbitmq/
+     environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+     networks:
+       - minha-rede
+   
    db:
      user: root
      image: mcr.microsoft.com/mssql/server:2019-latest
@@ -14,19 +27,21 @@
        - C:\dados\volumes\sqlserver\Fiap_Fase1_TechChallenge_Contatos:/var/opt/mssql/data
      networks:
        - minha-rede
+   
    redis:
     image: redis:latest
     ports:
       - "6379:6379"
     networks:
       - minha-rede
-   regionalcontacts.api:
-    image: ${DOCKER_REGISTRY-}regionalcontactsapi
+   
+   consulting.api:
+    image: ${DOCKER_REGISTRY-}consultingapi
     environment:
       - ASPNETCORE_URLS=http://+:80
     build:
       context: .
-      dockerfile: ./src/RegionalContacts.Api/Dockerfile      
+      dockerfile: ./consulting-api/regional-contacts-consulting-api/src/Consulting.Api/Dockerfile    
     ports:
       - "5001:80"
     depends_on:
@@ -35,6 +50,94 @@
     networks:
        - minha-rede
 
+   create.api:
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    build:
+      context: .
+      dockerfile: ./create-api/regional-contacts-api-create/src/Create.Api/Dockerfile    
+    ports:
+      - "5002:80"
+    depends_on:
+      - consulting.api
+      - rabbitmq
+    networks:
+       - minha-rede   
+
+   update.api:
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    build:
+      context: .
+      dockerfile: ./update-api/regional-contacts-api-update/src/Update.Api/Dockerfile    
+    ports:
+      - "5003:80"
+    depends_on:
+      - consulting.api
+      - rabbitmq
+    networks:
+       - minha-rede        
+
+   delete.api:
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    build:
+      context: .
+      dockerfile: ./delete-api/regional-contacts-api-delete/src/Delete.Api/Dockerfile    
+    ports:
+      - "5004:80"
+    depends_on:
+      - consulting.api
+      - rabbitmq
+      - db
+    networks:
+       - minha-rede  
+
+   worker.create:
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    build:
+      context: .
+      dockerfile: ./create-worker/regional-contacts-worker-create/src/Create.Worker/Dockerfile    
+    ports:
+      - "5005:80"
+    depends_on:
+      - db
+      - rabbitmq
+      - redis
+    networks:
+       - minha-rede 
+
+   worker.delete:
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    build:
+      context: .
+      dockerfile: ./delete-worker/regional-contacts-worker-delete/src/Delete.Worker/Dockerfile    
+    ports:
+      - "5006:80"
+    depends_on:
+      - db
+      - rabbitmq
+      - redis
+    networks:
+       - minha-rede 
+
+   worker.update:
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    build:
+      context: .
+      dockerfile: ./update-worker/regional-contacts-worker-update/src/Update.Worker/Dockerfile    
+    ports:
+      - "5007:80"
+    depends_on:
+      - db
+      - rabbitmq
+      - redis
+    networks:
+       - minha-rede 
+   
    prometheus:
     image: prom/prometheus
     container_name: prometheus_grafprom
