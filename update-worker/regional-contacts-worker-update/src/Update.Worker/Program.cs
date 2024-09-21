@@ -2,7 +2,9 @@ using CacheGateways;
 using DataBase.SqlServer;
 using DataBase.SqlServer.Configurations;
 using DBGateways;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Prometheus;
 using QueueGateways;
 using Rabbit.Consumer.Update;
 using Redis;
@@ -20,7 +22,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        var builder = Host.CreateApplicationBuilder(args);
+        var builder = WebApplication.CreateBuilder(args);
 
         // Configuração: Carregar appsettings e arquivos específicos para o ambiente
         var configuration = new ConfigurationBuilder()
@@ -30,6 +32,8 @@ internal class Program
 
         builder.Services.AddRabbitMq(configuration);
         builder.Services.AddRedis(configuration);
+
+        builder.Services.UseHttpClientMetrics();
 
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         builder.Services.AddScoped<IContactRepository, ContactRepository>();
@@ -51,6 +55,15 @@ internal class Program
             }, ServiceLifetime.Scoped);
 
         var host = builder.Build();
+
+        /* INICIO DA CONFIGURAÇÃO - PROMETHEUS */
+        host.UseMetricServer();
+        host.UseHttpMetrics(options =>
+        {
+            options.AddCustomLabel("host", context => context.Request.Host.Host);
+        });
+        /* FIM DA CONFIGURAÇÃO - PROMETHEUS */
+
         host.Run();
     }
 }
