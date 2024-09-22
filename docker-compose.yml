@@ -3,7 +3,7 @@
      image: rabbitmq:3-management
      container_name: rabbitmq_management    
      ports: 
-      - 5673:5673 # (erlang) communication between the nodes and CLI tool
+      - 5672:5672 # (erlang) communication between the nodes and CLI tool
       - 15672:15672 # communication with the web management API 
     
      volumes:
