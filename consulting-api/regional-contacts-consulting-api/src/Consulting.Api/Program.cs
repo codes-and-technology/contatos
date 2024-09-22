@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using Redis;
 using System.Text.Json.Serialization;
 using Prometheus;
+using Consulting.Api.Helpers.Middlewares;
 
 public class Program
 {
@@ -51,6 +52,7 @@ public class Program
 
         app.UseHttpsRedirection();
         app.UseAuthorization();
+        app.UseLoggingApi();
         app.MapControllers();
 
         app.Run();
@@ -58,6 +60,7 @@ public class Program
 
     private static void InstallServices(WebApplicationBuilder builder, IConfigurationRoot? configuration)
     {
+        builder.Services.AddLogging(builder => builder.AddConsole());
         builder.Services.AddControllers()
             .AddJsonOptions(options =>
             {

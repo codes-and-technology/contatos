@@ -6,7 +6,7 @@ using QueueGateway;
 using Rabbit.Producer.Create;
 using External.Interfaces;
 using Prometheus;
-
+using Create.Api.Helpers.Middlewares;
 public class Program
 {
     private static void Main(string[] args)
@@ -44,6 +44,7 @@ public class Program
         /* FIM DA CONFIGURAÇÃO - PROMETHEUS */
 
         app.UseHttpsRedirection();
+        app.UseLoggingApi();
         app.UseAuthorization();
         app.MapControllers();
 
@@ -52,6 +53,8 @@ public class Program
 
     private static void InstallServices(WebApplicationBuilder builder, IConfigurationRoot? configuration)
     {
+        builder.Services.AddLogging(builder => builder.AddConsole());
+
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
