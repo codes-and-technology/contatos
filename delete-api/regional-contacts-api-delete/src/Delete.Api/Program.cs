@@ -19,11 +19,6 @@ public class Program
             .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
             .Build();
 
-
-        builder.Services.AddControllers();
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-
         InstallServices(builder, configuration);
 
         builder.Services.AddSwaggerGen(c =>
@@ -35,12 +30,8 @@ public class Program
 
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
         /* INICIO DA CONFIGURAÇÃO - PROMETHEUS */
         app.UseMetricServer();
@@ -59,6 +50,10 @@ public class Program
 
     private static void InstallServices(WebApplicationBuilder builder, IConfigurationRoot configuration)
     {
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
         builder.Services.AddRabbitMq(configuration);
         builder.Services.AddRefitServiceExtension(configuration);
 

@@ -50,7 +50,7 @@ public class ContactsControllerTests : IClassFixture<CustomWebApplicationFactory
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
-        var result = JsonSerializer.Deserialize<ResultDto<UpdateContactEntity>>(resultString, options);
+        var result = JsonSerializer.Deserialize<ResultDto<ContactEntity>>(resultString, options);
 
         Assert.True(result.Errors.Count() > 0);
 

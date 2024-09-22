@@ -5,6 +5,6 @@ namespace DeleteInterface
 {
     public interface IController
     {
-        Task<ResultDto<DeleteContactEntity>> DeleteAsync(Guid id);
+        Task<ResultDto<ContactEntity>> DeleteAsync(Guid id);
     }
 }

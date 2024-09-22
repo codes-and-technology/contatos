@@ -16,7 +16,7 @@ public class ContactProducer : IContactProducer
         _configuration = configuration;
     }
 
-    public async Task SendMessage(DeleteContactEntity entity)
+    public async Task SendMessage(ContactEntity entity)
     {
         var host = _configuration["Rabbit:Host"];
         

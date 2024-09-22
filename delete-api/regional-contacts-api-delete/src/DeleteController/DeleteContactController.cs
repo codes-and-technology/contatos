@@ -16,7 +16,7 @@ public class DeleteContactController : IController
         _contactConsultingGateway = contactConsultingGateway;
     }
 
-    public async Task<ResultDto<DeleteContactEntity>> DeleteAsync(Guid id)
+    public async Task<ResultDto<ContactEntity>> DeleteAsync(Guid id)
     {
         var list = await _contactConsultingGateway.Get();
 

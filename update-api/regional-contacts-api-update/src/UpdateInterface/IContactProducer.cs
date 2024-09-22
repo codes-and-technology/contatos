@@ -4,5 +4,5 @@ namespace UpdateInterface;
 
 public interface IContactProducer
 {
-    Task SendMessage(UpdateContactEntity entity);
+    Task SendMessage(ContactEntity entity);
 }

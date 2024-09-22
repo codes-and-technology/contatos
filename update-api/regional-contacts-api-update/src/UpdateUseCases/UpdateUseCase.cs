@@ -15,9 +15,9 @@ public class UpdateUseCase
         _contactList = contactList; 
     }
 
-    public ResultDto<UpdateContactEntity> UpdateContact()
+    public ResultDto<ContactEntity> UpdateContact()
     {
-        var result = new ResultDto<UpdateContactEntity>();
+        var result = new ResultDto<ContactEntity>();
         result.Valid(_contactDto);
 
         if (Guid.Empty == _id)
@@ -49,10 +49,10 @@ public class UpdateUseCase
         return UpdateContactEntity();
     }
 
-    private ResultDto<UpdateContactEntity> UpdateContactEntity()
+    private ResultDto<ContactEntity> UpdateContactEntity()
     {
-        var result = new ResultDto<UpdateContactEntity>();
-        var contact = new UpdateContactEntity
+        var result = new ResultDto<ContactEntity>();
+        var contact = new ContactEntity
         {
             Id = _id,
             Name = _contactDto.Name,

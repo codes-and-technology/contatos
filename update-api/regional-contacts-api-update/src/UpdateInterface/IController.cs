@@ -5,6 +5,6 @@ namespace UpdateInterface
 {
     public interface IController
     {
-        Task<ResultDto<UpdateContactEntity>> UpdateAsync(Guid id, ContactDto contactDto);
+        Task<ResultDto<ContactEntity>> UpdateAsync(Guid id, ContactDto contactDto);
     }
 }

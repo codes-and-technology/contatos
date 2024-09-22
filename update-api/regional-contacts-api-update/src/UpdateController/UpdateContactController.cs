@@ -16,7 +16,7 @@ public class UpdateContactController : IController
         _contactConsultingGateway = contactConsultingGateway;
     }
 
-    public async Task<ResultDto<UpdateContactEntity>> UpdateAsync(Guid id, ContactDto contactDto)
+    public async Task<ResultDto<ContactEntity>> UpdateAsync(Guid id, ContactDto contactDto)
     {
         var list = await _contactConsultingGateway.Get(contactDto.RegionNumber);
 

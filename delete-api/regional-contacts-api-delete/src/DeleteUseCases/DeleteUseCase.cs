@@ -13,9 +13,9 @@ public class DeleteUseCase
         _contactList = contactList;
     }
 
-    public ResultDto<DeleteContactEntity> DeleteContact()
+    public ResultDto<ContactEntity> DeleteContact()
     {
-        var result = new ResultDto<DeleteContactEntity>();
+        var result = new ResultDto<ContactEntity>();
 
         if (Guid.Empty == _id)
         {
@@ -35,13 +35,18 @@ public class DeleteUseCase
         return DeleteContactEntity();
     }   
 
-    public ResultDto<DeleteContactEntity> DeleteContactEntity()
+    public ResultDto<ContactEntity> DeleteContactEntity()
     {
-        return new ResultDto<DeleteContactEntity>()
+        var contact = _contactList.FirstOrDefault(a => a.Id.Equals(_id.ToString(), StringComparison.InvariantCulture));
+        return new ResultDto<ContactEntity>()
         {
-            Data = new DeleteContactEntity
+            Data = new ContactEntity
             {
                 Id = _id,
+                Email = contact.Email,
+                Name = contact.Name,
+                PhoneNumber = contact.PhoneNumber,
+                PhoneRegion = new PhoneRegionEntity { RegionNumber = short.Parse(contact.RegionNumber.ToString()) }
             }
         };
     }

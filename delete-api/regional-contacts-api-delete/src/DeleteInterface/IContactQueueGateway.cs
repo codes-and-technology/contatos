@@ -4,5 +4,5 @@ namespace DeleteInterface;
 
 public interface IContactQueueGateway
 {
-    Task SendMessage(DeleteContactEntity entity);
+    Task SendMessage(ContactEntity entity);
 }

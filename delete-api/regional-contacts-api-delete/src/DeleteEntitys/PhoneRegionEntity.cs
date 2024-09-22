@@ -1,8 +1,6 @@
-﻿using UpdateEntitys.Base;
+﻿namespace DeleteEntitys;
 
-namespace UpdateEntitys;
-
-public class PhoneRegionEntity : EntityBase
+public class PhoneRegionEntity
 {
     public short RegionNumber { get; set; }
     public ICollection<ContactEntity> Contacts { get; set; } = [];

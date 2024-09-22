@@ -12,5 +12,5 @@ public class ContactQueueGateway : IContactQueueGateway
         _contactProducer = contactProducer;
     }
 
-    public async Task SendMessage(UpdateContactEntity entity) => await _contactProducer.SendMessage(entity);    
+    public async Task SendMessage(ContactEntity entity) => await _contactProducer.SendMessage(entity);    
 }

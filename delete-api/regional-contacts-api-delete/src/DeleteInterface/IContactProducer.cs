@@ -4,5 +4,5 @@ namespace DeleteInterface;
 
 public interface IContactProducer
 {
-    Task SendMessage(DeleteContactEntity entity);
+    Task SendMessage(ContactEntity entity);
 }
