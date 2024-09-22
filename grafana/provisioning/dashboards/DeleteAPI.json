@@ -89,7 +89,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(http_request_duration_seconds_count{code=~\"2..\",controller=\"Contact\",endpoint=\"api/Contact\"} / 2 ) or vector(0)",
+          "expr": "sum(http_request_duration_seconds_count{code=~\"2..\",controller=\"Contact\",endpoint=\"api/Contact\", job=\"delete-api\"}) or vector(0)",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -151,7 +151,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(http_request_duration_seconds_count{code=~\"4..\",controller=\"Contact\",endpoint=\"api/Contact\"} / 2 ) or vector(0)",
+          "expr": "sum(http_request_duration_seconds_count{code=~\"4..\",controller=\"Contact\",endpoint=\"api/Contact\", job=\"delete-api\"}) or vector(0)",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -213,7 +213,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(http_request_duration_seconds_count{code=~\"5..\",controller=\"Contact\",endpoint=\"api/Contact\"} / 2 ) or vector(0)",
+          "expr": "sum(http_request_duration_seconds_count{code=~\"5..\",controller=\"Contact\",endpoint=\"api/Contact\", job=\"delete-api\"}) or vector(0)",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -275,7 +275,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(http_request_duration_seconds_count{controller=\"Contact\",endpoint=\"api/Contact\"} / 2 ) or vector(0)",
+          "expr": "sum(http_request_duration_seconds_count{controller=\"Contact\",endpoint=\"api/Contact\",job=\"delete-api\"}) or vector(0)",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -748,5 +748,5 @@
   "timezone": "",
   "title": "Delete API Metrics Dashboard",
   "uid": "cb43bce4-c7b8-4f20-a8c9-2bee54df562a",
-  "version": 1
+  "version": 2
 }

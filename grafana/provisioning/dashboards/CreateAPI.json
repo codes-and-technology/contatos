@@ -89,7 +89,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(http_request_duration_seconds_count{code=~\"2..\",controller=\"Contact\",endpoint=\"api/Contact\", job=\"create-api\"} / 2 ) or vector(0)",
+          "expr": "sum(http_request_duration_seconds_count{code=~\"2..\",controller=\"Contact\",endpoint=\"api/Contact\", job=\"create-api\"}) or vector(0)",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -151,7 +151,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(http_request_duration_seconds_count{code=~\"4..\",controller=\"Contact\",endpoint=\"api/Contact\", job=\"create-api\"} / 2 ) or vector(0)",
+          "expr": "sum(http_request_duration_seconds_count{code=~\"4..\",controller=\"Contact\",endpoint=\"api/Contact\", job=\"create-api\"}) or vector(0)",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -213,7 +213,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(http_request_duration_seconds_count{code=~\"5..\",controller=\"Contact\",endpoint=\"api/Contact\", job=\"create-api\"} / 2 ) or vector(0)",
+          "expr": "sum(http_request_duration_seconds_count{code=~\"5..\",controller=\"Contact\",endpoint=\"api/Contact\", job=\"create-api\"}) or vector(0)",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -275,7 +275,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(http_request_duration_seconds_count{controller=\"Contact\",endpoint=\"api/Contact\", job=\"create-api\"} / 2 ) or vector(0)",
+          "expr": "sum(http_request_duration_seconds_count{controller=\"Contact\",endpoint=\"api/Contact\", job=\"create-api\"}) or vector(0)",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -748,5 +748,5 @@
   "timezone": "",
   "title": "Create API Metrics Dashboard",
   "uid": "703f96e0-1516-45ab-b74f-826dccdec4e4",
-  "version": 4
+  "version": 5
 }
