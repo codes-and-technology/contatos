@@ -21,14 +21,68 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build Docker image
-        run: docker build -t regionalcontacts.api:latest -f ./src/RegionalContacts.Api/Dockerfile .
+      - name: Build Docker image - regional-contacts-consulting-api
+        run: docker build -t regional-contacts-consulting-api:latest -f ./consulting-api/regional-contacts-consulting-api/src/Consulting.Api/Dockerfile .
 
-      - name: Tag Docker image
-        run: docker tag regionalcontacts.api:latest ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
+      - name: Tag Docker image - regional-contacts-consulting-api
+        run: docker tag regional-contacts-consulting-api:latest ${{ secrets.DOCKER_USERNAME }}/regional-contacts-consulting-api:latest
 
-      - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/regionalcontacts.api:latest
+      - name: Push Docker image - regional-contacts-consulting-api
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/regional-contacts-consulting-api:latest
+        
+      - name: Build Docker image - regional-contacts-api-create
+        run: docker build -t regional-contacts-api-create:latest -f ./create-api/regional-contacts-api-create/src/Create.Api/Dockerfile .
+
+      - name: Tag Docker image - regional-contacts-api-create
+        run: docker tag regional-contacts-api-create:latest ${{ secrets.DOCKER_USERNAME }}/regional-contacts-api-create:latest
+
+      - name: Push Docker image - regional-contacts-api-create
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/regional-contacts-api-create:latest
+        
+      - name: Build Docker image - regional-contacts-api-update
+        run: docker build -t regional-contacts-api-update:latest -f ./update-api/regional-contacts-api-update/src/Update.Api/Dockerfile .
+
+      - name: Tag Docker image - regional-contacts-api-update
+        run: docker tag regional-contacts-api-update:latest ${{ secrets.DOCKER_USERNAME }}/regional-contacts-api-update:latest
+
+      - name: Push Docker image - regional-contacts-api-update
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/regional-contacts-api-update:latest
+        
+      - name: Build Docker image - regional-contacts-api-delete
+        run: docker build -t regional-contacts-api-delete:latest -f ./delete-api/regional-contacts-api-delete/src/Delete.Api/Dockerfile .
+
+      - name: Tag Docker image - regional-contacts-api-delete
+        run: docker tag regional-contacts-api-delete:latest ${{ secrets.DOCKER_USERNAME }}/regional-contacts-api-delete:latest
+
+      - name: Push Docker image - regional-contacts-api-delete
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/regional-contacts-api-delete:latest
+        
+      - name: Build Docker image - regional-contacts-worker-create
+        run: docker build -t regional-contacts-worker-create:latest -f ./create-worker/regional-contacts-worker-create/src/Create.Worker/Dockerfile .
+
+      - name: Tag Docker image - regional-contacts-worker-create
+        run: docker tag regional-contacts-worker-create:latest ${{ secrets.DOCKER_USERNAME }}/regional-contacts-worker-create:latest
+
+      - name: Push Docker image - regional-contacts-worker-create
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/regional-contacts-worker-create:latest
+        
+      - name: Build Docker image - regional-contacts-worker-update
+        run: docker build -t regional-contacts-worker-update:latest -f ./update-worker/regional-contacts-worker-update/src/Update.Worker/Dockerfile .
+
+      - name: Tag Docker image - regional-contacts-worker-update
+        run: docker tag regional-contacts-worker-update:latest ${{ secrets.DOCKER_USERNAME }}/regional-contacts-worker-update:latest
+
+      - name: Push Docker image - regional-contacts-worker-update
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/regional-contacts-worker-update:latest
+        
+      - name: Build Docker image - regional-contacts-worker-delete
+        run: docker build -t regional-contacts-worker-delete:latest -f ./delete-worker/regional-contacts-worker-delete/src/Delete.Worker/Dockerfile .
+
+      - name: Tag Docker image - regional-contacts-worker-delete
+        run: docker tag regional-contacts-worker-delete:latest ${{ secrets.DOCKER_USERNAME }}/regional-contacts-worker-delete:latest
+
+      - name: Push Docker image - regional-contacts-worker-delete
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/regional-contacts-worker-delete:latest
 
   test-unitario:
     runs-on: ubuntu-latest
@@ -37,14 +91,68 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Restore dependencies
-        run: dotnet restore tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj
+      - name: Restore dependencies - regional-contacts-consulting-api.unit.tests
+        run: dotnet restore ./consulting-api/regional-contacts-consulting-api/tests/RegionalContactsWorkerCreate.Unit.Tests/RegionalContactsConsultingApi.Unit.Tests.csproj
 
-      - name: Build solution
-        run: dotnet build tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj --configuration Release --no-restore
+      - name: Build solution - regional-contacts-consulting-api.unit.tests
+        run: dotnet build ./consulting-api/regional-contacts-consulting-api/tests/RegionalContactsWorkerCreate.Unit.Tests/RegionalContactsConsultingApi.Unit.Tests.csproj --configuration Release --no-restore
 
-      - name: Run tests
-        run: dotnet test tests/RegionalContacts.Tests/RegionalContacts.Tests.csproj
+      - name: Run tests - regional-contacts-consulting-api.unit.tests
+        run: dotnet test ./consulting-api/regional-contacts-consulting-api/tests/RegionalContactsWorkerCreate.Unit.Tests/RegionalContactsConsultingApi.Unit.Tests.csproj
+        
+      - name: Restore dependencies - regional-contacts-api-create.unit.tests
+        run: dotnet restore ./create-api/regional-contacts-api-create/tests/RegionalContactsApiCreateTests/RegionalContactsApiCreateTests.csproj
+
+      - name: Build solution - regional-contacts-api-create.unit.tests
+        run: dotnet build ./create-api/regional-contacts-api-create/tests/RegionalContactsApiCreateTests/RegionalContactsApiCreateTests.csproj --configuration Release --no-restore
+
+      - name: Run tests - regional-contacts-api-create.unit.tests
+        run: dotnet test ./create-api/regional-contacts-api-create/tests/RegionalContactsApiCreateTests/RegionalContactsApiCreateTests.csproj
+        
+      - name: Restore dependencies - regional-contacts-api-update.unit.tests
+        run: dotnet restore ./update-api/regional-contacts-api-update/tests/RegionalContactsApiUpdateTests/RegionalContactsApiUpdateTests.csproj
+
+      - name: Build solution - regional-contacts-api-update.unit.tests
+        run: dotnet build ./update-api/regional-contacts-api-update/tests/RegionalContactsApiUpdateTests/RegionalContactsApiUpdateTests.csproj --configuration Release --no-restore
+
+      - name: Run tests - regional-contacts-api-update.unit.tests
+        run: dotnet test ./update-api/regional-contacts-api-update/tests/RegionalContactsApiUpdateTests/RegionalContactsApiUpdateTests.csproj
+        
+      - name: Restore dependencies - regional-contacts-api-delete.unit.tests
+        run: dotnet restore ./delete-api/regional-contacts-api-delete/tests/RegionalContactsApiDeleteTests/RegionalContactsApiDeleteTests.csproj
+
+      - name: Build solution - regional-contacts-api-delete.unit.tests
+        run: dotnet build ./delete-api/regional-contacts-api-delete/tests/RegionalContactsApiDeleteTests/RegionalContactsApiDeleteTests.csproj --configuration Release --no-restore
+
+      - name: Run tests - regional-contacts-api-delete.unit.tests
+        run: dotnet test ./delete-api/regional-contacts-api-delete/tests/RegionalContactsApiDeleteTests/RegionalContactsApiDeleteTests.csproj
+        
+      - name: Restore dependencies - regional-contacts-worker-create.unit.tests
+        run: dotnet restore ./create-worker/regional-contacts-worker-create/tests/RegionalContactsWorkerCreate.Unit.Tests/RegionalContactsWorkerCreate.Unit.Tests.csproj
+
+      - name: Build solution - regional-contacts-worker-create.unit.tests
+        run: dotnet build ./create-worker/regional-contacts-worker-create/tests/RegionalContactsWorkerCreate.Unit.Tests/RegionalContactsWorkerCreate.Unit.Tests.csproj --configuration Release --no-restore
+
+      - name: Run tests - regional-contacts-worker-create.unit.tests
+        run: dotnet test ./create-worker/regional-contacts-worker-create/tests/RegionalContactsWorkerCreate.Unit.Tests/RegionalContactsWorkerCreate.Unit.Tests.csproj
+        
+      - name: Restore dependencies - regional-contacts-worker-update.unit.tests
+        run: dotnet restore ./update-worker/regional-contacts-worker-update/tests/RegionalContactsWorkerUpdate.Unit.Tests/RegionalContactsWorkerUpdate.Unit.Tests.csproj
+
+      - name: Build solution - regional-contacts-worker-update.unit.tests
+        run: dotnet build ./update-worker/regional-contacts-worker-update/tests/RegionalContactsWorkerUpdate.Unit.Tests/RegionalContactsWorkerUpdate.Unit.Tests.csproj --configuration Release --no-restore
+
+      - name: Run tests - regional-contacts-worker-update.unit.tests
+        run: dotnet test ./update-worker/regional-contacts-worker-update/tests/RegionalContactsWorkerUpdate.Unit.Tests/RegionalContactsWorkerUpdate.Unit.Tests.csproj
+        
+      - name: Restore dependencies - regional-contacts-worker-delete.unit.tests
+        run: dotnet restore ./delete-worker/regional-contacts-worker-delete/tests/RegionalContactsWorkerDelete.Unit.Tests/RegionalContactsWorkerDelete.Unit.Tests.csproj
+
+      - name: Build solution - regional-contacts-worker-delete.unit.tests
+        run: dotnet build ./delete-worker/regional-contacts-worker-delete/tests/RegionalContactsWorkerDelete.Unit.Tests/RegionalContactsWorkerDelete.Unit.Tests.csproj --configuration Release --no-restore
+
+      - name: Run tests - regional-contacts-worker-delete.unit.tests
+        run: dotnet test ./delete-worker/regional-contacts-worker-delete/tests/RegionalContactsWorkerDelete.Unit.Tests/RegionalContactsWorkerDelete.Unit.Tests.csproj
 
   test-integracao:
     runs-on: self-hosted
@@ -58,17 +166,89 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: Restore dependencies
-        run: dotnet restore tests/RegionalContacts.Integration.Tests/RegionalContacts.Integration.Tests.csproj
+      - name: Restore dependencies - regional-contacts-consulting-api.integration.tests
+        run: dotnet restore ./consulting-api/regional-contacts-consulting-api/tests/RegionalContactsConsultingApi.Integration.Tests/RegionalContactsConsultingApi.Integration.Tests.csproj
 
-      - name: Build solution
-        run: dotnet build tests/RegionalContacts.Integration.Tests/RegionalContacts.Integration.Tests.csproj --configuration Release --no-restore
+      - name: Build solution - regional-contacts-consulting-api.integration.tests
+        run: dotnet build ./consulting-api/regional-contacts-consulting-api/tests/RegionalContactsConsultingApi.Integration.Tests/RegionalContactsConsultingApi.Integration.Tests.csproj --configuration Release --no-restore
 
-      - name: Run tests
+      - name: Run tests - regional-contacts-consulting-api.integration.tests
         env:
           ConnectionStrings__ConnectionString: "Data Source=host.docker.internal,1533;Initial Catalog=Fiap_Fase1_TechChallenge_Contatos;User ID=sa;Password=sql@123456;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False"
           Redis__Port: 6380
-        run: dotnet test tests/RegionalContacts.Integration.Tests/RegionalContacts.Integration.Tests.csproj
+        run: dotnet test ./consulting-api/regional-contacts-consulting-api/tests/RegionalContactsConsultingApi.Integration.Tests/RegionalContactsConsultingApi.Integration.Tests.csproj
+        
+      - name: Restore dependencies - regional-contacts-api-create.integration.tests
+        run: dotnet restore ./create-api/regional-contacts-api-create/tests/RegionalContactsApiCreate.Integration.Tests/RegionalContactsApiCreate.Integration.Tests.csproj
+
+      - name: Build solution - regional-contacts-api-create.integration.tests
+        run: dotnet build ./create-api/regional-contacts-api-create/tests/RegionalContactsApiCreate.Integration.Tests/RegionalContactsApiCreate.Integration.Tests.csproj --configuration Release --no-restore
+
+      - name: Run tests - regional-contacts-api-create.integration.tests
+        env:
+          ConnectionStrings__ConnectionString: "Data Source=host.docker.internal,1533;Initial Catalog=Fiap_Fase1_TechChallenge_Contatos;User ID=sa;Password=sql@123456;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False"
+          Redis__Port: 6380
+        run: dotnet test ./create-api/regional-contacts-api-create/tests/RegionalContactsApiCreate.Integration.Tests/RegionalContactsApiCreate.Integration.Tests.csproj
+        
+      - name: Restore dependencies - regional-contacts-api-update.integration.tests
+        run: dotnet restore ./update-api/regional-contacts-api-update/tests/RegionalContactsApiUpdate.IntegrationTests/RegionalContactsApiUpdate.IntegrationTests.csproj
+
+      - name: Build solution - regional-contacts-api-update.integration.tests
+        run: dotnet build ./update-api/regional-contacts-api-update/tests/RegionalContactsApiUpdate.IntegrationTests/RegionalContactsApiUpdate.IntegrationTests.csproj --configuration Release --no-restore
+
+      - name: Run tests - regional-contacts-api-update.integration.tests
+        env:
+          ConnectionStrings__ConnectionString: "Data Source=host.docker.internal,1533;Initial Catalog=Fiap_Fase1_TechChallenge_Contatos;User ID=sa;Password=sql@123456;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False"
+          Redis__Port: 6380
+        run: dotnet test ./update-api/regional-contacts-api-update/tests/RegionalContactsApiUpdate.IntegrationTests/RegionalContactsApiUpdate.IntegrationTests.csproj
+        
+      - name: Restore dependencies - regional-contacts-api-delete.integration.tests
+        run: dotnet restore ./delete-api/regional-contacts-api-delete/tests/RegionalContactsApiDelete.IntegrationTests/RegionalContactsApiDelete.IntegrationTests.csproj
+
+      - name: Build solution - regional-contacts-api-delete.integration.tests
+        run: dotnet build ./delete-api/regional-contacts-api-delete/tests/RegionalContactsApiDelete.IntegrationTests/RegionalContactsApiDelete.IntegrationTests.csproj --configuration Release --no-restore
+
+      - name: Run tests - regional-contacts-api-delete.integration.tests
+        env:
+          ConnectionStrings__ConnectionString: "Data Source=host.docker.internal,1533;Initial Catalog=Fiap_Fase1_TechChallenge_Contatos;User ID=sa;Password=sql@123456;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False"
+          Redis__Port: 6380
+        run: dotnet test ./delete-api/regional-contacts-api-delete/tests/RegionalContactsApiDelete.IntegrationTests/RegionalContactsApiDelete.IntegrationTests.csproj
+        
+      - name: Restore dependencies - regional-contacts-worker-create.integration.tests
+        run: dotnet restore ./create-worker/regional-contacts-worker-create/tests/RegionalContactsWorkerCreate.Integration.Tests/RegionalContactsWorkerCreate.Integration.Tests.csproj
+
+      - name: Build solution - regional-contacts-worker-create.integration.tests
+        run: dotnet build ./create-worker/regional-contacts-worker-create/tests/RegionalContactsWorkerCreate.Integration.Tests/RegionalContactsWorkerCreate.Integration.Tests.csproj --configuration Release --no-restore
+
+      - name: Run tests - regional-contacts-worker-create.integration.tests
+        env:
+          ConnectionStrings__ConnectionString: "Data Source=host.docker.internal,1533;Initial Catalog=Fiap_Fase1_TechChallenge_Contatos;User ID=sa;Password=sql@123456;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False"
+          Redis__Port: 6380
+        run: dotnet test ./create-worker/regional-contacts-worker-create/tests/RegionalContactsWorkerCreate.Integration.Tests/RegionalContactsWorkerCreate.Integration.Tests.csproj
+        
+      - name: Restore dependencies - regional-contacts-worker-update.integration.tests
+        run: dotnet restore ./update-worker/regional-contacts-worker-update/tests/RegionalContactsWorkerUpdate.Integration.Tests/RegionalContactsWorkerUpdate.Integration.Tests.csproj
+
+      - name: Build solution - regional-contacts-worker-update.integration.tests
+        run: dotnet build ./update-worker/regional-contacts-worker-update/tests/RegionalContactsWorkerUpdate.Integration.Tests/RegionalContactsWorkerUpdate.Integration.Tests.csproj --configuration Release --no-restore
+
+      - name: Run tests - regional-contacts-worker-update.integration.tests
+        env:
+          ConnectionStrings__ConnectionString: "Data Source=host.docker.internal,1533;Initial Catalog=Fiap_Fase1_TechChallenge_Contatos;User ID=sa;Password=sql@123456;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False"
+          Redis__Port: 6380
+        run: dotnet test ./update-worker/regional-contacts-worker-update/tests/RegionalContactsWorkerUpdate.Integration.Tests/RegionalContactsWorkerUpdate.Integration.Tests.csproj
+        
+      - name: Restore dependencies - regional-contacts-worker-delete.integration.tests
+        run: dotnet restore ./delete-worker/regional-contacts-worker-delete/tests/RegionalContactsWorkerDelete.Integration.Tests/RegionalContactsWorkerDelete.Integration.Tests.csproj
+
+      - name: Build solution - regional-contacts-worker-delete.integration.tests
+        run: dotnet build ./delete-worker/regional-contacts-worker-delete/tests/RegionalContactsWorkerDelete.Integration.Tests/RegionalContactsWorkerDelete.Integration.Tests.csproj --configuration Release --no-restore
+
+      - name: Run tests - regional-contacts-worker-delete.integration.tests
+        env:
+          ConnectionStrings__ConnectionString: "Data Source=host.docker.internal,1533;Initial Catalog=Fiap_Fase1_TechChallenge_Contatos;User ID=sa;Password=sql@123456;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False"
+          Redis__Port: 6380
+        run: dotnet test ./delete-worker/regional-contacts-worker-delete/tests/RegionalContactsWorkerDelete.Integration.Tests/RegionalContactsWorkerDelete.Integration.Tests.csproj
 
   deploy:
     runs-on: self-hosted

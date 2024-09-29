@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-Create.Worker-a505f40d-d2e4-4186-b09b-f15259b9507d</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+    <PackageReference Include="prometheus-net" Version="8.2.1" />
+    <PackageReference Include="prometheus-net.AspNetCore" Version="8.2.1" />
+    <PackageReference Include="prometheus-net.AspNetCore.HealthChecks" Version="8.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CacheGateways\CacheGateways.csproj" />
+    <ProjectReference Include="..\DBGateways\DBGateways.csproj" />
+    <ProjectReference Include="..\QueueGateways\QueueGateways.csproj" />
+    <ProjectReference Include="..\UpdateController\UpdateController.csproj" />
+    <ProjectReference Include="..\DataBase\DataBase.csproj" />
+    <ProjectReference Include="..\Rabbit.Consumer.Update\Rabbit.Consumer.Update.csproj" />
+    <ProjectReference Include="..\Redis\Redis.csproj" />
+  </ItemGroup>
+</Project>
