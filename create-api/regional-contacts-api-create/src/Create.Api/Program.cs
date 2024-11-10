@@ -1,4 +1,4 @@
-using CreateController;
+ï»¿using CreateController;
 using CreateInterface;
 using ExternalInterfaceGateway;
 using Microsoft.OpenApi.Models;
@@ -13,7 +13,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Configuração: Carregar appsettings e arquivos específicos para o ambiente
+        // ConfiguraÃ§Ã£o: Carregar appsettings e arquivos especÃ­ficos para o ambiente
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
@@ -30,23 +30,25 @@ public class Program
 
         var app = builder.Build();
 
-
         app.UseSwagger();
         app.UseSwaggerUI();
 
-
-        /* INICIO DA CONFIGURAÇÃO - PROMETHEUS */
+        /* INICIO DA CONFIGURAÃ‡ÃƒO - PROMETHEUS */
         app.UseMetricServer();
         app.UseHttpMetrics(options =>
         {
             options.AddCustomLabel("host", context => context.Request.Host.Host);
         });
-        /* FIM DA CONFIGURAÇÃO - PROMETHEUS */
+        /* FIM DA CONFIGURAÃ‡ÃƒO - PROMETHEUS */
 
         app.UseHttpsRedirection();
-        app.UseLoggingApi();
         app.UseAuthorization();
+        app.UseLoggingApi();
         app.MapControllers();
+
+        // Configurar endpoints de saï¿½de
+        app.MapHealthChecks("/health");
+        app.MapHealthChecks("/readiness");
 
         app.Run();
     }
@@ -54,7 +56,7 @@ public class Program
     private static void InstallServices(WebApplicationBuilder builder, IConfigurationRoot? configuration)
     {
         builder.Services.AddLogging(builder => builder.AddConsole());
-
+        builder.Services.AddHealthChecks();
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
