@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: create-api
-        image: createapi
+        image: danielharo/regional-contacts-api-create.api:latest
         ports:
         - containerPort: 80
         env:
@@ -26,8 +26,10 @@ kind: Service
 metadata:
   name: create-api
 spec:
-  ports:
-  - port: 80
-    targetPort: 80
+  type: NodePort  # Usando NodePort para acesso local
   selector:
     app: create-api
+  ports:
+    - port: 80           # Porta exposta no serviço
+      targetPort: 80      # Porta onde a aplicação está ouvindo no pod
+      nodePort: 30081     # Porta exposta no nó local (seu computador)
