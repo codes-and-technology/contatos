@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: update-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: update-api
+  template:
+    metadata:
+      labels:
+        app: update-api
+    spec:
+      containers:
+      - name: update-api
+        image: updateapi
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_URLS
+          value: "http://+:80"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: update-api
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: update-api
