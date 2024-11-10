@@ -36,11 +36,8 @@ public class Program
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
         /* INICIO DA CONFIGURAÇÃO - PROMETHEUS */
         app.UseMetricServer();
@@ -55,12 +52,17 @@ public class Program
         app.UseLoggingApi();
         app.MapControllers();
 
+        // Configurar endpoints de saúde
+        app.MapHealthChecks("/health");
+        app.MapHealthChecks("/readiness");
+
         app.Run();
     }
 
     private static void InstallServices(WebApplicationBuilder builder, IConfigurationRoot? configuration)
     {
         builder.Services.AddLogging(builder => builder.AddConsole());
+        builder.Services.AddHealthChecks();
         builder.Services.AddControllers()
             .AddJsonOptions(options =>
             {

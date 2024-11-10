@@ -1,12 +1,12 @@
-using UpdateController;
-using UpdateInterface;
+ï»¿using External.Interfaces;
+using ExternalInterfaceGateway;
 using Microsoft.OpenApi.Models;
+using Prometheus;
 using QueueGateway;
 using Rabbit.Producer.Update;
-using ExternalInterfaceGateway;
-using External.Interfaces;
-using Prometheus;
 using Update.Api.Helpers.Middlewares;
+using UpdateController;
+using UpdateInterface;
 
 public class Program
 {
@@ -14,7 +14,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Configuração: Carregar appsettings e arquivos específicos para o ambiente
+        // ConfiguraÃ§Ã£o: Carregar appsettings e arquivos especÃ­ficos para o ambiente
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
@@ -34,17 +34,22 @@ public class Program
         app.UseSwagger();
         app.UseSwaggerUI();
 
-        /* INICIO DA CONFIGURAÇÃO - PROMETHEUS */
+        /* INICIO DA CONFIGURAÃ‡ÃƒO - PROMETHEUS */
         app.UseMetricServer();
         app.UseHttpMetrics(options =>
         {
             options.AddCustomLabel("host", context => context.Request.Host.Host);
         });
-        /* FIM DA CONFIGURAÇÃO - PROMETHEUS */
+        /* FIM DA CONFIGURAÃ‡ÃƒO - PROMETHEUS */
 
         app.UseHttpsRedirection();
         app.UseAuthorization();
+        app.UseLoggingApi();
         app.MapControllers();
+
+        // Configurar endpoints de saï¿½de
+        app.MapHealthChecks("/health");
+        app.MapHealthChecks("/readiness");
 
         app.Run();
     }
@@ -52,7 +57,7 @@ public class Program
     private static void InstallServices(WebApplicationBuilder builder, IConfigurationRoot configuration)
     {
         builder.Services.AddLogging(builder => builder.AddConsole());
-
+        builder.Services.AddHealthChecks();
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();

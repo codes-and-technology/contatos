@@ -8,6 +8,11 @@ public class ApplicationDbContext : DbContext
 {
     private readonly string _connectionString;
 
+    public ApplicationDbContext()
+    {
+       
+    }
+
     public ApplicationDbContext(IConfiguration configuration)
     {
         _connectionString = configuration.GetConnectionString("ConnectionString");

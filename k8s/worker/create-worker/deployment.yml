@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: create-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: create-worker
+  template:
+    metadata:
+      labels:
+        app: create-worker
+    spec:
+      containers:
+      - name: create-worker
+        image: 318914/regional-contacts-create-worker:latest  # Imagem do seu container
+        ports:
+        - containerPort: 80  # Porta onde a aplicação está ouvindo dentro do container
+        env:
+        - name: ASPNETCORE_URLS
+          value: "http://+:80"  # O ASP.NET Core precisa escutar em todas as interfaces
+        - name: ConnectionStrings__DefaultConnection
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-v1
+              key: ConnectionString
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.1"
+            memory: "256Mi"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /readiness
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10

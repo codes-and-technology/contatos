@@ -17,6 +17,7 @@ using DeleteInterface.UseCase;
 using DeleteUseCases.UseCase;
 using Microsoft.AspNetCore.Builder;
 using Prometheus;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 internal class Program
 {
@@ -54,6 +55,10 @@ internal class Program
                 options.UseSqlServer(configuration.GetConnectionString("ConnectionString"));
             }, ServiceLifetime.Scoped);
 
+        // Adiciona health checks
+        builder.Services.AddHealthChecks()
+            .AddCheck("self", () => HealthCheckResult.Healthy());
+
         var host = builder.Build();
 
         /* INICIO DA CONFIGURAÇÃO - PROMETHEUS */
@@ -63,6 +68,10 @@ internal class Program
             options.AddCustomLabel("host", context => context.Request.Host.Host);
         });
         /* FIM DA CONFIGURAÇÃO - PROMETHEUS */
+
+        // Configura os endpoints de health check
+        host.MapHealthChecks("/health");
+        host.MapHealthChecks("/readiness");
 
         host.Run();
     }
