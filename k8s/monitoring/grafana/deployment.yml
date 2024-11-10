@@ -24,8 +24,8 @@ spec:
           mountPath: /etc/grafana/provisioning/dashboards
       volumes:
       - name: grafana-datasources
-        hostPath:
-          path: ./grafana/provisioning/datasources
+        persistentVolumeClaim:
+          claimName: grafana-pvc-datasources
       - name: grafana-dashboards
-        hostPath:
-          path: ./grafana/provisioning/dashboards
+        persistentVolumeClaim:
+          claimName: grafana-pvc-dashboards

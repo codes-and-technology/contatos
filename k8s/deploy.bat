@@ -36,8 +36,8 @@ kubectl delete -f monitoring\node-exporter-deployment.yml
 REM Apply SQL Server configurations
 kubectl apply -f sql\persistenceVolume.yml
 kubectl apply -f sql\persistenceVolumeClaim.yml
-kubectl apply -f sql\mssql-deployment.yml
-kubectl apply -f sql\mssql-service.yml
+kubectl apply -f sql\deployment.yml
+kubectl apply -f sql\service.yml
 
 REM Wait for SQL Server to be ready
 echo Waiting for SQL Server to be ready...

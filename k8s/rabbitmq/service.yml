@@ -5,9 +5,11 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 5672
+  - name: amqp  # Nome para a porta 5672 (AMQP)
+    port: 5672
     targetPort: 5672
-  - port: 15672
+  - name: management  # Nome para a porta 15672 (interface de gerenciamento)
+    port: 15672
     targetPort: 15672
   selector:
     app: rabbitmq
