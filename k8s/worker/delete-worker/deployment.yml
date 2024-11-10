@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: consulting-api
+  name: delete-worker
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: consulting-api
+      app: delete-worker
   template:
     metadata:
       labels:
-        app: consulting-api
+        app: delete-worker
     spec:
       containers:
-      - name: consulting-api
-        image: 318914/consultingapi:latest  # Imagem do seu container
+      - name: delete-worker
+        image: 318914/regional-contacts-delete-worker:latest  # Imagem do seu container
         ports:
         - containerPort: 80  # Porta onde a aplicação está ouvindo dentro do container
         env:
@@ -23,7 +23,7 @@ spec:
         - name: ConnectionStrings__DefaultConnection
           valueFrom:
             configMapKeyRef:
-              name: consulting-api-config
+              name: configmap-v1
               key: ConnectionString
         resources:
           limits:
@@ -44,17 +44,3 @@ spec:
             port: 80
           initialDelaySeconds: 10
           periodSeconds: 10
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: consulting-api
-spec:
-  type: NodePort  # Usando NodePort para acesso local
-  selector:
-    app: consulting-api
-  ports:
-    - port: 80           # Porta exposta no serviço
-      targetPort: 80      # Porta onde a aplicação está ouvindo no pod
-      nodePort: 30080     # Porta exposta no nó local (seu computador)

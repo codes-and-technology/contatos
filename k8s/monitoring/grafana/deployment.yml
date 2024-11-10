@@ -29,14 +29,3 @@ spec:
       - name: grafana-dashboards
         hostPath:
           path: ./grafana/provisioning/dashboards
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: grafana
-spec:
-  ports:
-  - port: 3000
-    targetPort: 3000
-  selector:
-    app: grafana
