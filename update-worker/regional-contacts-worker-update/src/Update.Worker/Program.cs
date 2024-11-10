@@ -4,6 +4,7 @@ using DataBase.SqlServer.Configurations;
 using DBGateways;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Prometheus;
 using QueueGateways;
 using Rabbit.Consumer.Update;
@@ -54,6 +55,10 @@ internal class Program
                 options.UseSqlServer(configuration.GetConnectionString("ConnectionString"));
             }, ServiceLifetime.Scoped);
 
+        // Adiciona health checks
+        builder.Services.AddHealthChecks()
+            .AddCheck("self", () => HealthCheckResult.Healthy());
+
         var host = builder.Build();
 
         /* INICIO DA CONFIGURAÇÃO - PROMETHEUS */
@@ -63,6 +68,10 @@ internal class Program
             options.AddCustomLabel("host", context => context.Request.Host.Host);
         });
         /* FIM DA CONFIGURAÇÃO - PROMETHEUS */
+
+        // Configura os endpoints de health check
+        host.MapHealthChecks("/health");
+        host.MapHealthChecks("/readiness");
 
         host.Run();
     }
