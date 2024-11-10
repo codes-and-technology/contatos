@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: consulting-api
-        image: danielharo/consultingapi:latest  # Imagem do seu container
+        image: 318914/consultingapi:latest  # Imagem do seu container
         ports:
         - containerPort: 80  # Porta onde a aplicação está ouvindo dentro do container
         env:
