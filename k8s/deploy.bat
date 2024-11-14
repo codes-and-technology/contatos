@@ -84,13 +84,6 @@ kubectl apply -f k8s/api/delete-api/service.yml
 kubectl apply -f k8s/api/update-api/deployment.yml
 kubectl apply -f k8s/api/update-api/service.yml
 
-REM Wait for APIs to be ready
-echo Waiting for APIs to be ready...
-kubectl wait --for=condition=available --timeout=600s deployment/consulting-api
-kubectl wait --for=condition=available --timeout=600s deployment/create-api
-kubectl wait --for=condition=available --timeout=600s deployment/delete-api
-kubectl wait --for=condition=available --timeout=600s deployment/update-api
-
 REM Apply Worker configurations
 kubectl apply -f k8s/worker/create-worker/deployment.yml
 kubectl apply -f k8s/worker/create-worker/service.yml
@@ -98,12 +91,6 @@ kubectl apply -f k8s/worker/delete-worker/deployment.yml
 kubectl apply -f k8s/worker/delete-worker/service.yml
 kubectl apply -f k8s/worker/update-worker/deployment.yml
 kubectl apply -f k8s/worker/update-worker/service.yml
-
-REM Wait for Workers to be ready
-echo Waiting for Workers to be ready...
-kubectl wait --for=condition=available --timeout=600s deployment/worker-create
-kubectl wait --for=condition=available --timeout=600s deployment/worker-delete
-kubectl wait --for=condition=available --timeout=600s deployment/worker-update
 
 echo All deployments have been applied successfully.
 endlocal
