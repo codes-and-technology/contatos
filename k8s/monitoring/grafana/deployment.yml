@@ -17,6 +17,13 @@ spec:
         image: grafana/grafana:master
         ports:
         - containerPort: 3000
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
         volumeMounts:
         - name: grafana-datasources
           mountPath: /etc/grafana/provisioning/datasources
@@ -25,7 +32,7 @@ spec:
       volumes:
       - name: grafana-datasources
         hostPath:
-          path: "C:\dados\volumes\grafana\provisioning\datasources"
+          path: C:\dados\volumes\grafana\provisioning\datasources
       - name: grafana-dashboards
         hostPath:
-          path: "C:\dados\volumes\grafana\provisioning\dashboards"
+          path: C:\dados\volumes\grafana\provisioning\dashboards
