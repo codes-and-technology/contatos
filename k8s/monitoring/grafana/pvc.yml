@@ -12,7 +12,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: grafana-dashboards-pvc
+  name: grafana-datasources-pvc
 spec:
   accessModes:
     - ReadWriteOnce

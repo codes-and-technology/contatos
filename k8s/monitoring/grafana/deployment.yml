@@ -13,19 +13,38 @@ spec:
         app: grafana
     spec:
       containers:
-      - name: grafana
-        image: grafana/grafana:master
-        ports:
-        - containerPort: 3000
-        volumeMounts:
-        - name: grafana-datasources
-          mountPath: /etc/grafana/provisioning/datasources
-        - name: grafana-dashboards
-          mountPath: /etc/grafana/provisioning/dashboards
+        - name: grafana
+          image: grafana/grafana:latest
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+          volumeMounts:
+            - mountPath: /etc/grafana/provisioning/datasources 
+              name: grafana-datasources
+              readOnly: false
+            - mountPath: /var/lib/grafana/dashboards 
+              name: grafana-dashboards
+              readOnly: false
+            - mountPath: /etc/grafana/provisioning/dashboards
+              name: grafana-provisioning
+              readOnly: false # Caminho correto de provisionamento
+          securityContext:
+            runAsUser: 472  # ID do usuário para o Grafana
       volumes:
         - name: grafana-datasources
           configMap:
-            name: grafana-datasources  # ConfigMap de Datasource
+            defaultMode: 420
+            name: grafana-datasources  # Certifique-se de que o nome está correto
         - name: grafana-dashboards
           configMap:
-            name: grafana-dashboards  # ConfigMap de Dashboards
+            defaultMode: 420
+            name: grafana-dashboards  # Certifique-se de que o nome está correto
+        - name: grafana-provisioning
+          configMap:
+            defaultMode: 420
+            name: grafana-provisioning
+      securityContext:
+        fsGroup: 472
+        runAsUser: 472
+        supplementalGroups:
+          - 0
