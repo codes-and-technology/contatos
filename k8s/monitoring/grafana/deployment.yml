@@ -18,7 +18,7 @@ spec:
           volumeMounts:
             - name: grafana-datasources
               mountPath: /etc/grafana/provisioning/datasources
-            - name: grafana-dashboards  # Este é o volume que estava faltando na seção 'volumes'
+            - name: grafana-dashboards
               mountPath: /var/lib/grafana/dashboards
           env:
             - name: GF_PROVISIONING_PATH
@@ -27,10 +27,8 @@ spec:
               value: /var/lib/grafana/dashboards
       volumes:
         - name: grafana-datasources
-          hostPath:
-            path: /mnt/c/dados/volumes/grafana/provisioning/datasources
-            type: DirectoryOrCreate
-        - name: grafana-dashboards  # Aqui você precisa garantir que o volume 'grafana-dashboards' seja definido corretamente
-          hostPath:
-            path: /mnt/c/dados/volumes/grafana/provisioning/dashboards
-            type: DirectoryOrCreate
+          configMap:
+            name: grafana-datasources  # ConfigMap de Datasource
+        - name: grafana-dashboards
+          configMap:
+            name: grafana-dashboards  # ConfigMap de Dashboards
