@@ -13,19 +13,24 @@ spec:
         app: grafana
     spec:
       containers:
-      - name: grafana
-        image: grafana/grafana:master
-        ports:
-        - containerPort: 3000
-        volumeMounts:
-        - name: grafana-datasources
-          mountPath: /etc/grafana/provisioning/datasources
-        - name: grafana-dashboards
-          mountPath: /etc/grafana/provisioning/dashboards
+        - name: grafana
+          image: grafana/grafana:latest
+          volumeMounts:
+            - name: grafana-datasources
+              mountPath: /etc/grafana/provisioning/datasources
+            - name: grafana-dashboards  # Este é o volume que estava faltando na seção 'volumes'
+              mountPath: /var/lib/grafana/dashboards
+          env:
+            - name: GF_PROVISIONING_PATH
+              value: /etc/grafana/provisioning
+            - name: GF_DASHBOARDS_DEFAULT_FOLDER
+              value: /var/lib/grafana/dashboards
       volumes:
-      - name: grafana-datasources
-        hostPath:
-          path: "C:\dados\volumes\grafana\provisioning\datasources"
-      - name: grafana-dashboards
-        hostPath:
-          path: "C:\dados\volumes\grafana\provisioning\dashboards"
+        - name: grafana-datasources
+          hostPath:
+            path: /mnt/c/dados/volumes/grafana/provisioning/datasources
+            type: DirectoryOrCreate
+        - name: grafana-dashboards  # Aqui você precisa garantir que o volume 'grafana-dashboards' seja definido corretamente
+          hostPath:
+            path: /mnt/c/dados/volumes/grafana/provisioning/dashboards
+            type: DirectoryOrCreate

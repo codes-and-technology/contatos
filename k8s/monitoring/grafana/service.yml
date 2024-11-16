@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: grafana
 spec:
-  type: NodePort
+  type: NodePort  # Permite acesso externo
   ports:
   - port: 3000
     targetPort: 3000
-    nodePort: 30099
+    nodePort: 30099  # Porta de acesso externa no nó
   selector:
     app: grafana
