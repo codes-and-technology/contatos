@@ -13,18 +13,15 @@ spec:
         app: grafana
     spec:
       containers:
-        - name: grafana
-          image: grafana/grafana:latest
-          volumeMounts:
-            - name: grafana-datasources
-              mountPath: /etc/grafana/provisioning/datasources
-            - name: grafana-dashboards
-              mountPath: /var/lib/grafana/dashboards
-          env:
-            - name: GF_PROVISIONING_PATH
-              value: /etc/grafana/provisioning
-            - name: GF_DASHBOARDS_DEFAULT_FOLDER
-              value: /var/lib/grafana/dashboards
+      - name: grafana
+        image: grafana/grafana:master
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: grafana-datasources
+          mountPath: /etc/grafana/provisioning/datasources
+        - name: grafana-dashboards
+          mountPath: /etc/grafana/provisioning/dashboards
       volumes:
         - name: grafana-datasources
           configMap:
