@@ -16,8 +16,7 @@ spec:
         - name: grafana
           image: grafana/grafana:latest
           ports:
-            - containerPort: 3000
-          volumeMounts:
+            - containerPort: 3000          
           volumeMounts:
             - mountPath: /etc/grafana/provisioning/datasources 
               name: grafana-datasources

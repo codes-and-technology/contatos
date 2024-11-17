@@ -256,5 +256,6 @@ jobs:
     steps:
       - name: Clear Cuurents PODs
         run: ./k8s/deploy-clear.ps1
+        continue-on-error: true
       - name: Create new PODs
         run: ./k8s/deploy-apply.ps1
