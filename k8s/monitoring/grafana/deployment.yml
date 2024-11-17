@@ -27,18 +27,18 @@ spec:
               readOnly: false
             - mountPath: /etc/grafana/provisioning/dashboards
               name: grafana-provisioning
-              readOnly: false # Caminho correto de provisionamento
+              readOnly: false
           securityContext:
-            runAsUser: 472  # ID do usuário para o Grafana
+            runAsUser: 472
       volumes:
         - name: grafana-datasources
           configMap:
             defaultMode: 420
-            name: grafana-datasources  # Certifique-se de que o nome está correto
+            name: grafana-datasources
         - name: grafana-dashboards
           configMap:
             defaultMode: 420
-            name: grafana-dashboards  # Certifique-se de que o nome está correto
+            name: grafana-dashboards  
         - name: grafana-provisioning
           configMap:
             defaultMode: 420
