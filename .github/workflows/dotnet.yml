@@ -254,5 +254,7 @@ jobs:
     runs-on: self-hosted
     needs: test-integracao
     steps:
-      - name: Create PODS
-        run: ./k8s/deploy.ps1
+      - name: Clear Cuurents PODs
+        run: ./k8s/deploy-clear.ps1
+      - name: Create new PODs
+        run: ./k8s/deploy-apply.ps1
