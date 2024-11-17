@@ -13,26 +13,38 @@ spec:
         app: grafana
     spec:
       containers:
-      - name: grafana
-        image: grafana/grafana:master
-        ports:
-        - containerPort: 3000
-        resources:
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
-        volumeMounts:
-        - name: grafana-datasources
-          mountPath: /etc/grafana/provisioning/datasources
-        - name: grafana-dashboards
-          mountPath: /etc/grafana/provisioning/dashboards
+        - name: grafana
+          image: grafana/grafana:latest
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+          volumeMounts:
+            - mountPath: /etc/grafana/provisioning/datasources 
+              name: grafana-datasources
+              readOnly: false
+            - mountPath: /var/lib/grafana/dashboards 
+              name: grafana-dashboards
+              readOnly: false
+            - mountPath: /etc/grafana/provisioning/dashboards
+              name: grafana-provisioning
+              readOnly: false
+          securityContext:
+            runAsUser: 472
       volumes:
-      - name: grafana-datasources
-        hostPath:
-          path: C:\dados\volumes\grafana\provisioning\datasources
-      - name: grafana-dashboards
-        hostPath:
-          path: C:\dados\volumes\grafana\provisioning\dashboards
+        - name: grafana-datasources
+          configMap:
+            defaultMode: 420
+            name: grafana-datasources
+        - name: grafana-dashboards
+          configMap:
+            defaultMode: 420
+            name: grafana-dashboards  
+        - name: grafana-provisioning
+          configMap:
+            defaultMode: 420
+            name: grafana-provisioning
+      securityContext:
+        fsGroup: 472
+        runAsUser: 472
+        supplementalGroups:
+          - 0
