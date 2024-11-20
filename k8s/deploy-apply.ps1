@@ -14,8 +14,8 @@ kubectl wait --for=condition=available --timeout=600s deployment/mssql
 # Display current date and time
 Write-Host "Waiting 10 seconds for database to be UP: $(Get-Date)"
 
-# Wait for 10 seconds to ensure SQL Server is fully up
-Start-Sleep -Seconds 10
+# Wait for 40 seconds to ensure SQL Server is fully up
+Start-Sleep -Seconds 40
 
 # Execute SQL script to create database structure
 Write-Host "Creating database structure $(Get-Date)..."
