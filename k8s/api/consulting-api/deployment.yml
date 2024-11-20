@@ -2,6 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: consulting-api
+  labels: 
+    app: consulting-api
+    ambiente: dev
+    equipe: desenvolvimento
+  annotations: 
+    criador: "Daniel Haro, Eduardo Rodrigues e Kenny Evans"
+    descricao: "Aplicação para consultar Contatos"
+    revisao: "1.0"  
 spec:
   replicas: 1
   selector:

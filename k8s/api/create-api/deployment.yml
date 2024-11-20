@@ -2,6 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: create-api
+  labels: 
+    app: create-api
+    ambiente: dev
+    equipe: desenvolvimento
+  annotations: 
+    criador: "Daniel Haro, Eduardo Rodrigues e Kenny Evans"
+    descricao: "API para Criar Contatos"
+    revisao: "1.0"    
 spec:
   replicas: 1
   selector:

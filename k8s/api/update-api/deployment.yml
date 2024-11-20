@@ -2,6 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: update-api
+  labels: 
+    app: update-api
+    ambiente: dev
+    equipe: desenvolvimento
+  annotations:
+    criador: "Daniel Haro, Eduardo Rodrigues e Kenny Evans"
+    descricao: "API para Atualizar Contatos"
+    revisao: "1.0" 
 spec:
   replicas: 1
   selector:

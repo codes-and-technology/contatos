@@ -2,6 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: delete-worker
+  labels: 
+    app: delete-worker
+    ambiente: dev
+    equipe: desenvolvimento
+  annotations:
+    criador: "Daniel Haro, Eduardo Rodrigues e Kenny Evans"
+    descricao: "Worker para Deletar Contatos"
+    revisao: "1.0" 
 spec:
   replicas: 1
   selector:
