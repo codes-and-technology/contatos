@@ -151,7 +151,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(http_request_duration_seconds_count{code=~\"2..\",controller=\"Contact\", job=\"update-api\", job=\"update-api\"}) or vector(0)",
+          "expr": "sum(http_request_duration_seconds_count{code=~\"4..\",controller=\"Contact\", job=\"update-api\", job=\"update-api\"}) or vector(0)",
           "hide": false,
           "instant": false,
           "interval": "",
