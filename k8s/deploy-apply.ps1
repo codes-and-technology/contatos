@@ -19,7 +19,7 @@ Start-Sleep -Seconds 40
 
 # Execute SQL script to create database structure
 Write-Host "Creating database structure $(Get-Date)..."
-Invoke-Sqlcmd -ServerInstance "localhost,1433" -Database "master" -Username "sa" -Password "sql@123456" -ConnectionString "TrustServerCertificate=True" -InputFile ".\k8s\create-database.sql"
+Invoke-Sqlcmd -ConnectionString "Server=localhost,1433;Database=master;User ID=sa;Password=sql@123456;TrustServerCertificate=True" -InputFile ".\k8s\create-database.sql"
 
 # Apply Redis configurations
 kubectl apply -f k8s/redis/deployment.yml
