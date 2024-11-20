@@ -12,14 +12,14 @@ Write-Host "Waiting for SQL Server to be ready..."
 kubectl wait --for=condition=available --timeout=600s deployment/mssql
 
 # Display current date and time
-Write-Host "Waiting 10 seconds for database to be UP: $(Get-Date)"
+Write-Host "Waiting 40 seconds for database to be UP: $(Get-Date)"
 
-# Wait for 10 seconds to ensure SQL Server is fully up
-Start-Sleep -Seconds 10
+# Wait for 40 seconds to ensure SQL Server is fully up
+Start-Sleep -Seconds 40
 
 # Execute SQL script to create database structure
 Write-Host "Creating database structure $(Get-Date)..."
-Invoke-Sqlcmd -ServerInstance "localhost,1433" -Database "master" -Username "sa" -Password "sql@123456" -ConnectionTimeout 30 -QueryTimeout 30 -ConnectionString "TrustServerCertificate=True" -InputFile ".\k8s\create-database.sql"
+Invoke-Sqlcmd -ServerInstance "localhost,1433" -Database "master" -Username "sa" -Password "sql@123456" -ConnectionString "TrustServerCertificate=True" -InputFile ".\k8s\create-database.sql"
 
 # Apply Redis configurations
 kubectl apply -f k8s/redis/deployment.yml
